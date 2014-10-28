@@ -15,7 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class ClueGame extends JFrame{
-	
+
 	private Map<Character,String> rooms = new HashMap<Character,String>();
 	private ArrayList<Card> cards = new ArrayList<Card>();
 	private ArrayList<Card> peopleCards = new ArrayList<Card>();
@@ -45,10 +45,11 @@ public class ClueGame extends JFrame{
 	}
 
 	public ClueGame(String layout, String legend, String players, String weapons) {
+
 		layoutFile = layout;
 		legendFile = legend;
-		playersFile=players;
-		weaponsFile=weapons;
+		playersFile = players;
+		weaponsFile = weapons;
 
 		try {
 			board = new Board(layoutFile);
@@ -71,7 +72,7 @@ public class ClueGame extends JFrame{
 		setTitle("Clue Game");
 		createLayout();
 	}
-	
+
 	public ClueGame(String layout, String legend) {
 		this(layout,legend,"players.txt","weapons.txt");
 	}
@@ -124,6 +125,8 @@ public class ClueGame extends JFrame{
 				players.add(new ComputerPlayer(firstName  +" " + lastName, color, row, col));
 			}
 		}
+		// change: close scanner
+		scan.close();
 	}
 
 	public void loadWeapons(String weaponFile) throws FileNotFoundException {
@@ -135,6 +138,8 @@ public class ClueGame extends JFrame{
 			weaponCards.add(new Card(weaponName,Card.CardType.WEAPON));
 			cards.add(new Card(weaponName,Card.CardType.WEAPON));
 		}
+		// change: close scanner
+		scan.close();
 	}
 
 	public ArrayList<Player> getPlayers() {
