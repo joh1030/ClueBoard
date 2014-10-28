@@ -175,7 +175,8 @@ public class Board extends JPanel {
 					adjLists.put(getBoardCell(i,j), adjacents);
 				}
 				if( getBoardCell(i, j).isWalkway() ) {
-					if (i!=numRows-1) if(getBoardCell(i+1, j).isWalkway() || (getBoardCell(i+1, j).isDoorway() && getRoomCell(i+1,j).getDoorDirection() == DoorDirection.UP)) adjacents.add(getBoardCell(i+1,j));
+					if (i!=numRows-1) 
+						if(getBoardCell(i+1, j).isWalkway() || (getBoardCell(i+1, j).isDoorway() && getRoomCell(i+1,j).getDoorDirection() == DoorDirection.UP)) adjacents.add(getBoardCell(i+1,j));
 					if (j!=numColumns-1) if(getBoardCell(i, j+1).isWalkway() || (getBoardCell(i, j+1).isDoorway() && getRoomCell(i,j+1).getDoorDirection() == DoorDirection.LEFT)) adjacents.add(getBoardCell(i,j+1));
 					if (i!=0) if(getBoardCell(i-1, j).isWalkway() || (getBoardCell(i-1, j).isDoorway() && getRoomCell(i-1,j).getDoorDirection() == DoorDirection.DOWN)) adjacents.add(getBoardCell(i-1,j));
 					if (j!=0) if(getBoardCell(i, j-1).isWalkway() || (getBoardCell(i, j-1).isDoorway() && getRoomCell(i,j-1).getDoorDirection() == DoorDirection.RIGHT)) adjacents.add(getBoardCell(i,j-1));
@@ -193,7 +194,7 @@ public class Board extends JPanel {
 			}
 		}
 	}
-
+	// change: DRY: don't repeat yourself
 	public void calcTargets(BoardCell cell, int diceRoll) {
 		startingPoint = cell;
 		visited.clear();
@@ -209,7 +210,7 @@ public class Board extends JPanel {
 		targets.clear();
 		findAllTargets(startingPoint, diceRoll);
 	}
-
+	// change: remove unnecessary comments
 	public void findAllTargets(BoardCell cell, int diceRoll) {
 		LinkedList<BoardCell> temp = getAdjList(cell);
 		LinkedList<BoardCell> notYetVisited = new LinkedList<BoardCell>();
@@ -270,7 +271,8 @@ public class Board extends JPanel {
 	public RoomCell getRoomCell(int row, int col) {
 		return (RoomCell) layout[row][col];
 	}
+	
 	public void setPlayers(ArrayList<Player> player){
-		players=player;
+		players = player;
 	}
 }

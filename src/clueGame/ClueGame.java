@@ -43,7 +43,7 @@ public class ClueGame extends JFrame{
 		ClueGame game = new ClueGame("ClueLayout.csv","ClueLegend.csv","players.txt","weapons.txt");
 		game.setVisible(true);
 	}
-
+	
 	public ClueGame(String layout, String legend, String players, String weapons) {
 
 		layoutFile = layout;
@@ -64,7 +64,8 @@ public class ClueGame extends JFrame{
 		} catch (FileNotFoundException | BadConfigFormatException e) {
 			e.printStackTrace();
 		}
-		System.out.println(board.getNumRows());
+		
+		//System.out.println(board.getNumRows());
 
 		board.setPlayers(this.players);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

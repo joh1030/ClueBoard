@@ -20,7 +20,7 @@ public class DetectiveNotes extends JDialog {
 		weaponsCards = weapons;
 		createLayout();
 	}
-
+	
 	public void createLayout(){
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(3,0));
@@ -32,7 +32,8 @@ public class DetectiveNotes extends JDialog {
 		weaponGuessPanel(panel);
 		add(panel);
 	}
-
+	
+	// change: DRY - consolidate panel functions into one function
 	public void peoplePanel(JPanel dialog) {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(0,2));

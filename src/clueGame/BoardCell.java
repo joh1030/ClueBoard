@@ -24,7 +24,6 @@ public abstract class BoardCell {
 	public BoardCell(int R, int C) {
 		row = R;
 		column = C;
-		
 	}
 	
 	public abstract void draw(Graphics g,Board board);

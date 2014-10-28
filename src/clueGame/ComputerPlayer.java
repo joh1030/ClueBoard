@@ -3,6 +3,7 @@ package clueGame;
 import java.util.*;
 
 public class ComputerPlayer extends Player {
+	
 	private ArrayList<Card> seenCards= new ArrayList<Card>();
 	private ArrayList<Card> allCards= new ArrayList<Card>();
 	private char lastRoomVisited;
@@ -14,12 +15,12 @@ public class ComputerPlayer extends Player {
 	public ComputerPlayer(String name, String color, int row, int col) {
 		super(name,color,row,col);
 	}
+	
 	@Override
 	public void addCard(Card card){
 		super.addCard(card);
 		seenCards.add(card);
 	}
-
 
 	public BoardCell pickLocation(Set<BoardCell> targets) {
 		int loc = new Random().nextInt(targets.size()); 
@@ -41,11 +42,13 @@ public class ComputerPlayer extends Player {
 		return null;
 	}
 
-	public Suggestion createSuggestion(String room){
+	public Suggestion createSuggestion(String room) {
+		
 		ArrayList<Card> people=new ArrayList<Card>();
 		ArrayList<Card> weapons=new ArrayList<Card>();
 		String person;
 		String weapon;
+		
 		for(Card c: allCards){
 			if(!seenCards.contains(c)){
 				if(c.cardType == Card.CardType.PERSON){
@@ -56,10 +59,13 @@ public class ComputerPlayer extends Player {
 				}
 			}
 		}
-		person=people.get(new Random().nextInt(people.size())).getName();
-		weapon=weapons.get(new Random().nextInt(weapons.size())).getName();
-		return new Suggestion(person,weapon,room);
+		
+		person = people.get(new Random().nextInt(people.size())).getName();
+		weapon = weapons.get(new Random().nextInt(weapons.size())).getName();
+		
+		return new Suggestion(person, weapon, room);
 	}
+	
 	public void setAllCards(ArrayList<Card> cardsIn){
 		allCards=cardsIn;
 	}
