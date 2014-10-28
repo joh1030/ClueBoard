@@ -1,0 +1,11 @@
+K-Keg Room
+B-Bedroom
+N-Kitchen
+F-Family Room
+C-Cellar
+R-Bar Room
+D-Dining Room
+G-Garage
+L-Library
+X-Closet
+H-Hallway

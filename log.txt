@@ -1,0 +1,223 @@
+We paired programmed for most parts. 
+
+commit d114f7cd6f3660a5ffd3fcc4b77c93ae69bbf5d3
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Thu Oct 23 16:24:06 2014 -0600
+
+    added guess panels with combo boxes
+
+commit d9610f9375aeec8b40dba6433a234a7d6b7a908a
+Author: unknown <avanderm@MZ022-20.adit.mines.edu>
+Date:   Thu Oct 23 12:03:34 2014 -0600
+
+    Begun working on detective notes
+
+commit 39190d198309c6a643127998b1095ff1a9d39870
+Author: unknown <avanderm@MZ022-20.adit.mines.edu>
+Date:   Thu Oct 23 11:13:12 2014 -0600
+
+    Fixed window size
+
+commit 6fd273634451832b55b294ac55147b5db435284f
+Author: unknown <avanderm@MZ022-20.adit.mines.edu>
+Date:   Thu Oct 23 10:58:03 2014 -0600
+
+    Changed player locations
+
+commit d5a3f44c77f5acff1d9715100785e2fd456b6843
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Wed Oct 22 16:09:34 2014 -0600
+
+    Got the names of the rooms printing
+
+commit 3b246d810a29aae51485274a6db13ec65d06a22f
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Wed Oct 22 15:24:02 2014 -0600
+
+    Got the grid and players displaying
+
+commit 311ca9de15b84b4b62ab978ad78a650613a3e692
+Author: Alan VanderMeer <avanderm@mymail.mines.edu>
+Date:   Mon Oct 20 17:14:35 2014 -0600
+
+    Delete logFile.txt
+
+commit b3242f9381ed81250306409d9eb20d2a6884b547
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Mon Oct 20 17:06:51 2014 -0600
+
+    Passed tests for last visited room
+
+commit 0c735bd2ac60572026ce66c0161ebfeecf9c3b32
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Mon Oct 20 17:06:26 2014 -0600
+
+    Added tests for last visited room
+
+commit f62675f2d889900878b5155f6beebd371f152a86
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Mon Oct 20 16:43:09 2014 -0600
+
+    Passed computer suggestion with random cards
+
+commit d89859fcd8d48d8364e64268d2fb419ac1155a80
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Mon Oct 20 16:30:16 2014 -0600
+
+    Added createSuggestion
+
+commit add6b570b6533cd88b56d91501e91aff131ceffe
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Mon Oct 20 16:12:35 2014 -0600
+
+    Added testComputerSuggestion
+
+commit 9417ac512d5cc332afd1c7fc7be7ecfd3f52ce79
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Mon Oct 20 16:12:04 2014 -0600
+
+    Passed testTarget with room
+
+commit d0e1d5c5ef891cdd93b0900488e8ae6d2e4d378d
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Mon Oct 20 16:05:06 2014 -0600
+
+    Added testTarget with room
+
+commit ff6b288a87f49b1b6e13e660ea5dc29f68cd7cf6
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Mon Oct 20 15:56:47 2014 -0600
+
+    Passed testTargetRandomSelection
+
+commit d2b998e2c9b562dd2dbdaa7f157e18e1aa366710
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Mon Oct 20 15:42:16 2014 -0600
+
+    Added tests for checking random card selection and test not returning card
+
+commit d16720995afed2d36ea5294cac201226424dc5f9
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Mon Oct 20 15:03:19 2014 -0600
+
+    added test for random target selection
+
+commit 2c0634904ae87a993afbd92e13dc73bfefcb508a
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Mon Oct 20 14:34:23 2014 -0600
+
+    added failing tests for random target selection
+
+commit 60759fa09b6f4c326a27c0a1f47e403c7b5317b8
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Wed Oct 15 17:49:56 2014 -0600
+
+    Modified computer player
+
+commit 57091094e93becae754523e68a5cc7a7921bf20d
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Wed Oct 15 17:43:41 2014 -0600
+
+    Added handleSuggestion
+
+commit d24c60e5ef160bbd6a93576c330c7e82006973f5
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Wed Oct 15 17:27:42 2014 -0600
+
+    Added more Disprove suggestion tests
+
+commit f1f461135785c54652f99edd957e80246b20b6a0
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Wed Oct 15 17:23:14 2014 -0600
+
+    Added Disprove suggestion tests
+
+commit c354e3ea17439db42d01308589d50ff9777419da
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Wed Oct 15 17:04:59 2014 -0600
+
+    Added more comments
+
+commit a3ed3c78551abdc2f99a8dac0737c88af6f96d4f
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Wed Oct 15 17:02:03 2014 -0600
+
+    Passed player tests
+
+commit 3dcf879dbe7791d38cfa77ea892cd081ca34e047
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Wed Oct 15 16:59:24 2014 -0600
+
+    Passed accusation tests
+
+commit 5a6f9f407d0bc1292111e9f7cc865ef0daa6fe94
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Wed Oct 15 16:58:36 2014 -0600
+
+    Added accusation tests
+
+commit 95f21289872e92e69ed8bad23c5fbe97a967aad2
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Wed Oct 15 16:35:53 2014 -0600
+
+    Added deal tests
+
+commit d1763adfd54e1388364ae9740de23886d7e11684
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Wed Oct 15 16:06:06 2014 -0600
+
+    Added card type tests
+
+commit c2b072e73308a4986a58588bd2892d6b5e691a3e
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Wed Oct 15 15:58:34 2014 -0600
+
+    Passing load card tests
+
+commit 4dc4c347eb0e092e78fd6237f29f0edfad9b4b48
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Wed Oct 15 15:54:47 2014 -0600
+
+    Added load card tests
+
+commit 16c50d89afa94d27f8979bae1db92c98c0313a59
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Wed Oct 15 15:29:50 2014 -0600
+
+    Added load player tests
+
+commit 82c2a6011cef25c236635d3dd2d0e0b27029ffa5
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Wed Oct 15 15:03:34 2014 -0600
+
+    change string to color
+
+commit 7db726bd97e8c5ddd61f94f4c111b1a7be6aace5
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Wed Oct 15 13:53:48 2014 -0600
+
+    Added weapons.txt. Made minor changes
+
+commit b14c612480919312f4daf2d79d07cd2a675d3c2b
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Wed Oct 15 10:03:32 2014 -0600
+
+    small change
+
+commit 2389b91fe32e3b2d4156409c3676435156cf9232
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Thu Oct 9 12:18:46 2014 -0600
+
+    Making progress on Clue Players Assignment
+
+commit df74376f7a684f59e9701f0e898e86ccc7692dfa
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Wed Oct 8 22:27:43 2014 -0600
+
+    Added new classes based on UML diagram. Also added test classes with setUp() methods.
+
+commit ece519cf725b561b6696cd4257e7242971a9e9bd
+Author: Jin Oh <joh@mymail.mines.edu>
+Date:   Wed Oct 8 21:50:23 2014 -0600
+
+    first commit after code swap
