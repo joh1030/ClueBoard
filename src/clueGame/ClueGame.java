@@ -46,11 +46,11 @@ public class ClueGame extends JFrame{
 		notes = new DetectiveNotes(peopleCards,roomCards,weaponCards);
 		notes.setVisible(true);
 	}
-
+	
 	private JMenu createFileMenu() {
 		JMenu menu = new JMenu("File"); 
-		menu.add(createFileExitItem());
-		menu.add(createFileShowNotesItem());
+		menu.add(createFileExitItem()); // add exit option
+		menu.add(createFileShowNotesItem()); // add show notes option
 		return menu;
 	}
 
@@ -101,8 +101,6 @@ public class ClueGame extends JFrame{
 		} catch (FileNotFoundException | BadConfigFormatException e) {
 			e.printStackTrace();
 		}
-
-		//System.out.println(board.getNumRows());
 
 		board.setPlayers(this.players);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -166,7 +164,7 @@ public class ClueGame extends JFrame{
 				players.add(new ComputerPlayer(firstName  +" " + lastName, color, row, col));
 			}
 		}
-		// change: close scanner
+		// CHANGE: close scanner
 		scan.close();
 	}
 
@@ -179,7 +177,7 @@ public class ClueGame extends JFrame{
 			weaponCards.add(new Card(weaponName,Card.CardType.WEAPON));
 			cards.add(new Card(weaponName,Card.CardType.WEAPON));
 		}
-		// change: close scanner
+		// CHANGE: close scanner
 		scan.close();
 	}
 

@@ -84,7 +84,6 @@ public class Board extends JPanel {
 		}
 		numRows = lineCount;
 		numColumns = cellCount;
-		// System.out.println("loaded board as rows: " + numRows + " & columns: " + numColumns);
 	}
 
 	public void loadBoardConfig(String layoutFile) throws BadConfigFormatException, FileNotFoundException {
@@ -107,7 +106,6 @@ public class Board extends JPanel {
 		for( int i = 0; i < numRows; i++ ) {
 			String[] tempLine = temp.split(",");
 			if (firstTempLine.length != tempLine.length) throw new BadConfigFormatException();
-			//System.out.println("__________________row line __________________");
 			for( int j = 0; j < tempLine.length; j++ ) {
 				roomMade = false;
 				//next check if this is a doorway in a room and handle
@@ -117,7 +115,6 @@ public class Board extends JPanel {
 							tempLine[j].charAt(1) == 'L' || tempLine[j].charAt(1) == 'R' ) {
 						tempDir = tempLine[j].charAt(1);
 						layout[i][j] = new RoomCell(i, j, tempLine[j].charAt(0), tempDir);
-						//System.out.println("doorway" + layout[i][j].toString());
 						roomMade = true;
 					}
 				}
@@ -126,15 +123,12 @@ public class Board extends JPanel {
 				if( tempLine[j].equalsIgnoreCase(walkWayChar) ) {
 
 					layout[i][j] = new WalkwayCell(i, j);
-					//System.out.println("walkway" + layout[i][j].toString());
 					roomMade = true;
 				}
 
 				//if not these, it must be a room without a doorway (or closet)
 				if( !roomMade ) {
-					//System.out.println("else: " + tempLine[j].charAt(0));
 					layout[i][j] = new RoomCell(i, j, tempLine[j].charAt(0));
-					//System.out.println("room" + layout[i][j].toString());
 				}
 			}
 			//read next line if it's allowed
@@ -145,7 +139,7 @@ public class Board extends JPanel {
 
 		scan.close();
 	}
-
+	
 	public void loadLegend(String legendFile) throws FileNotFoundException, BadConfigFormatException {
 		//setup filereader and scanner
 		FileReader reader = new FileReader(legendFile);
@@ -163,6 +157,7 @@ public class Board extends JPanel {
 			rooms.put(tempLine[0].charAt(0), tempLine[1].trim());
 			roomNames.put(tempLine[1], tempLine[2]+","+tempLine[3]);
 		}
+		// CHANGE: closed scanner
 		scan.close();
 	}
 
@@ -210,7 +205,7 @@ public class Board extends JPanel {
 		targets.clear();
 		findAllTargets(startingPoint, diceRoll);
 	}
-	// change: remove unnecessary comments
+	
 	public void findAllTargets(BoardCell cell, int diceRoll) {
 		LinkedList<BoardCell> temp = getAdjList(cell);
 		LinkedList<BoardCell> notYetVisited = new LinkedList<BoardCell>();
@@ -219,15 +214,12 @@ public class Board extends JPanel {
 		}
 		for(BoardCell adj : notYetVisited) {
 			if(adj.isDoorway() && !targets.contains(adj)) targets.add(adj);
-			// System.out.println("Targets: " + targets.toString());
 		}
 
 		for(BoardCell adj : notYetVisited) {
 			visited.add(adj);
-			// System.out.println("Visited: " + visited.toString());
 			if(diceRoll == 1) {
 				if (!targets.contains(adj)) targets.add(adj);
-				// System.out.println("Targets: " + targets.toString());
 			}
 			else {
 				findAllTargets(adj,diceRoll-1);				

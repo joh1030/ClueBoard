@@ -34,19 +34,18 @@ public class GameSetupTests {
 		assertEquals("Miss Scarlett", game.getPlayers().get(0).getName());
 		assertEquals(Color.black, game.getPlayers().get(0).getColor());
 		assertEquals(0, game.getPlayers().get(0).getRow());
-		assertEquals(4, game.getPlayers().get(0).getCol());
+		assertEquals(8, game.getPlayers().get(0).getCol());
 
 		//test second line computer player
 		assertEquals("Colonel Mustard", game.getPlayers().get(1).getName());
 		assertEquals(Color.blue, game.getPlayers().get(1).getColor());
 		assertEquals(21, game.getPlayers().get(1).getRow());
-		assertEquals(6, game.getPlayers().get(1).getCol());
+		assertEquals(5, game.getPlayers().get(1).getCol());
 		//test third line computer player
 		assertEquals("Mrs. White", game.getPlayers().get(2).getName());
 		assertEquals(Color.cyan, game.getPlayers().get(2).getColor());
 		assertEquals(14, game.getPlayers().get(2).getRow());
 		assertEquals(20, game.getPlayers().get(2).getCol());
-
 	}
 
 	@Test
