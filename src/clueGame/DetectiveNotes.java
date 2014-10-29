@@ -25,40 +25,38 @@ public class DetectiveNotes extends JDialog {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(3,0));
 		peoplePanels(panel);
-		//personGuessPanel(panel);
 		roomPanels(panel);
-		//roomGuessPanel(panel);
 		weaponsPanels(panel);
-		//weaponGuessPanel(panel);
 		add(panel);
 	}
 	
 	public void peoplePanels(JPanel dialog) {
-		
+		// create people panel
 		JPanel peoplePanel = new JPanel();
 		peoplePanel.setLayout(new GridLayout(0,2));
 		peoplePanel.setBorder(BorderFactory.createTitledBorder("People"));
-		
+		// create person guess panel
 		JPanel personGuessPanel = new JPanel();
 		personGuessPanel.setLayout(new GridLayout(0,2));
 		personGuessPanel.setBorder(BorderFactory.createTitledBorder("Person Guess"));
 		JComboBox<String> combo = new JComboBox<String>();
+		
 		for(Card c: peopleCards){
 			peoplePanel.add(new JCheckBox(c.getName()));
 			combo.addItem(c.getName());
 		}
 		personGuessPanel.add(combo);
-		
+		// add panels to dialog
 		dialog.add(peoplePanel);
 		dialog.add(personGuessPanel);
 	}
 
 	public void roomPanels(JPanel dialog) {
-		
+		// create room panel
 		JPanel roomPanel = new JPanel();
 		roomPanel.setLayout(new GridLayout(0,2));
 		roomPanel.setBorder(BorderFactory.createTitledBorder("Rooms"));
-		
+		// create room guess panel
 		JPanel roomGuessPanel = new JPanel();
 		roomGuessPanel.setLayout(new GridLayout(0,2));
 		roomGuessPanel.setBorder(BorderFactory.createTitledBorder("Room Guess"));
@@ -69,17 +67,17 @@ public class DetectiveNotes extends JDialog {
 			combo.addItem(c.getName());
 		}
 		roomGuessPanel.add(combo);
-		
+		// add panels to dialog
 		dialog.add(roomPanel);
 		dialog.add(roomGuessPanel);
 	}
 
 	public void weaponsPanels(JPanel dialog) {
-		
+		// create weapon panel
 		JPanel weaponPanel = new JPanel();
 		weaponPanel.setLayout(new GridLayout(0,2));
 		weaponPanel.setBorder(BorderFactory.createTitledBorder("Weapons"));
-		
+		// create weapon guess panel
 		JPanel weaponGuessPanel = new JPanel();
 		weaponGuessPanel.setLayout(new GridLayout(0,2));
 		weaponGuessPanel.setBorder(BorderFactory.createTitledBorder("Weapon Guess"));
@@ -90,33 +88,9 @@ public class DetectiveNotes extends JDialog {
 			combo.addItem(c.getName());
 		}
 		weaponGuessPanel.add(combo);
-		
+		// add panels to dialog
 		dialog.add(weaponPanel);
 		dialog.add(weaponGuessPanel);
 	}
-	
-	/*public void roomGuessPanel(JPanel dialog) {
-		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(0,2));
-		panel.setBorder(BorderFactory.createTitledBorder("Room Guess"));
-		JComboBox<String> combo = new JComboBox<String>();
-		for(Card c: roomsCards){
-			combo.addItem(c.getName());
-		}
-		panel.add(combo);
-		dialog.add(panel);
-	}*/
-	
-	/*public void weaponGuessPanel(JPanel dialog) {
-		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(0,2));
-		panel.setBorder(BorderFactory.createTitledBorder("Weapon Guess"));
-		JComboBox<String> combo = new JComboBox<String>();
-		for(Card c: weaponsCards){
-			combo.addItem(c.getName());
-		}
-		panel.add(combo);
-		dialog.add(panel);
-	}*/
 }
 

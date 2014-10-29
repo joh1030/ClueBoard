@@ -1,4 +1,4 @@
-close scanner
+close scanner (x)
 remove unnecessary variables
 fix calcAdjacencies 
 have two calcTargets: combine into one
