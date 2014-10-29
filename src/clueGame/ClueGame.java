@@ -38,38 +38,40 @@ public class ClueGame extends JFrame{
 	private String weaponsFile;
 	
 	DetectiveNotes notes;
-
-	public static final int SQUARE_LENGTH = 30;
-
+	
+	// used for the length of each squares on the board
+	public static final int SQUARE_LENGTH = 30; 
+	
+	// creates detective notes
 	private void createNotes() {
-		add(board,BorderLayout.CENTER);
 		notes = new DetectiveNotes(peopleCards,roomCards,weaponCards);
 		notes.setVisible(true);
 	}
 	
+	// creates a menu bar
 	private JMenu createFileMenu() {
 		JMenu menu = new JMenu("File"); 
 		menu.add(createFileExitItem()); // add exit option
 		menu.add(createFileShowNotesItem()); // add show notes option
 		return menu;
 	}
-
+	// creates file option "Exit"
 	private JMenuItem createFileExitItem() {
 		JMenuItem item = new JMenuItem("Exit");
 		class MenuItemListener implements ActionListener {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+			public void actionPerformed(ActionEvent e) { 
+				System.exit(0); // close windows when chosen
 			}
 		}
 		item.addActionListener(new MenuItemListener());
 		return item;
 	}
-	
+	// creates file option "Show Notes"
 	private JMenuItem createFileShowNotesItem() {
 		JMenuItem item = new JMenuItem("Show Notes");
 		class MenuItemListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
-				notes.setVisible(true);
+				notes.setVisible(true); // place DetectiveNotes on top of all windows when chosen
 			}
 		}
 		item.addActionListener(new MenuItemListener());
@@ -102,11 +104,14 @@ public class ClueGame extends JFrame{
 			e.printStackTrace();
 		}
 
-		board.setPlayers(this.players);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize((board.getNumRows()+1)*SQUARE_LENGTH, (board.getNumColumns()+2)*SQUARE_LENGTH);
 		setTitle("Clue Game");
+		board.setPlayers(this.players);
+		add(board,BorderLayout.CENTER);
+		
 		createNotes();
+		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		menuBar.add(createFileMenu());
