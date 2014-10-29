@@ -3,6 +3,6 @@ remove unnecessary variables
 fix calcAdjacencies 
 have two calcTargets: combine into one
 remove unnecessary comments (x)
-remove unused class (main)
+remove unused class (main) (x)
 consolidate panel functions into one function (x)
 add comments (x)
