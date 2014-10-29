@@ -1,7 +1,11 @@
 package clueGame;
 
+import javax.swing.*;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -12,6 +16,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
 public class ClueGame extends JFrame{
@@ -30,20 +36,51 @@ public class ClueGame extends JFrame{
 	private String legendFile;
 	private String playersFile;
 	private String weaponsFile;
+	
+	DetectiveNotes notes;
 
 	public static final int SQUARE_LENGTH = 30;
 
-	private void createLayout() {
+	private void createNotes() {
 		add(board,BorderLayout.CENTER);
-		DetectiveNotes notes = new DetectiveNotes(peopleCards,roomCards,weaponCards);
+		notes = new DetectiveNotes(peopleCards,roomCards,weaponCards);
 		notes.setVisible(true);
+	}
+
+	private JMenu createFileMenu() {
+		JMenu menu = new JMenu("File"); 
+		menu.add(createFileExitItem());
+		menu.add(createFileShowNotesItem());
+		return menu;
+	}
+
+	private JMenuItem createFileExitItem() {
+		JMenuItem item = new JMenuItem("Exit");
+		class MenuItemListener implements ActionListener {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		}
+		item.addActionListener(new MenuItemListener());
+		return item;
+	}
+	
+	private JMenuItem createFileShowNotesItem() {
+		JMenuItem item = new JMenuItem("Show Notes");
+		class MenuItemListener implements ActionListener {
+			public void actionPerformed(ActionEvent e) {
+				notes.setVisible(true);
+			}
+		}
+		item.addActionListener(new MenuItemListener());
+		return item;
 	}
 
 	public static void main(String[] args) {
 		ClueGame game = new ClueGame("ClueLayout.csv","ClueLegend.csv","players.txt","weapons.txt");
 		game.setVisible(true);
 	}
-	
+
 	public ClueGame(String layout, String legend, String players, String weapons) {
 
 		layoutFile = layout;
@@ -64,14 +101,17 @@ public class ClueGame extends JFrame{
 		} catch (FileNotFoundException | BadConfigFormatException e) {
 			e.printStackTrace();
 		}
-		
+
 		//System.out.println(board.getNumRows());
 
 		board.setPlayers(this.players);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize((board.getNumRows()+1)*SQUARE_LENGTH, (board.getNumColumns()+2)*SQUARE_LENGTH);
 		setTitle("Clue Game");
-		createLayout();
+		createNotes();
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		menuBar.add(createFileMenu());
 	}
 
 	public ClueGame(String layout, String legend) {
