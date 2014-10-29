@@ -4,5 +4,5 @@ fix calcAdjacencies
 have two calcTargets: combine into one
 remove unnecessary comments (x)
 remove unused class (main)
-consolidate panel functions into one function
+consolidate panel functions into one function (x)
 add comments
