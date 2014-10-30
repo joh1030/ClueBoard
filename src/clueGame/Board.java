@@ -1,6 +1,5 @@
 package clueGame;
 
-import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -26,7 +25,6 @@ public class Board extends JPanel {
 	private Map<BoardCell, LinkedList<BoardCell>> adjLists = new HashMap<>();
 	private Set<BoardCell> targets = new HashSet<BoardCell>();
 	private Set<BoardCell> visited = new HashSet<BoardCell>();
-	private LinkedList<BoardCell> path = new LinkedList<BoardCell>();
 	private BoardCell startingPoint  = null;
 	private ArrayList<Player> players;
 	private Map<String,String> roomNames= new HashMap<String,String>();
@@ -157,7 +155,7 @@ public class Board extends JPanel {
 			rooms.put(tempLine[0].charAt(0), tempLine[1].trim());
 			roomNames.put(tempLine[1], tempLine[2]+","+tempLine[3]);
 		}
-		// CHANGE: closed scanner
+
 		scan.close();
 	}
 
@@ -195,7 +193,7 @@ public class Board extends JPanel {
 	}
 
 	public void calcTargets(int i, int j, int diceRoll) {
-		setupHelper(getBoardCell(i, j),int diceRoll);
+		setupHelper(getBoardCell(i, j), diceRoll);
 	}
 	
 	private void setupHelper(BoardCell cell, int diceRoll) {

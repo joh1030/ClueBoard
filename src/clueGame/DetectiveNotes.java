@@ -1,6 +1,5 @@
 package clueGame;
 
-import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
