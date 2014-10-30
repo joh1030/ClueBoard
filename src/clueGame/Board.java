@@ -66,7 +66,6 @@ public class Board extends JPanel {
 		String temp;
 		int lineCount = 0;
 		int cellCount = 0;
-		int cellCount2 = 0;
 		temp = scan.nextLine();
 		lineCount++;
 		String[] tempLine = temp.split(",");
@@ -82,6 +81,7 @@ public class Board extends JPanel {
 				if (cellCount2 != cellCount) throw new BadConfigFormatException();*/
 			}
 		}
+		scan.close();
 		numRows = lineCount;
 		numColumns = cellCount;
 	}
@@ -191,19 +191,19 @@ public class Board extends JPanel {
 	}
 	// change: DRY: don't repeat yourself
 	public void calcTargets(BoardCell cell, int diceRoll) {
+		setupHelper(cell,diceRoll);
+	}
+
+	public void calcTargets(int i, int j, int diceRoll) {
+		setupHelper(getBoardCell(i, j),int diceRoll);
+	}
+	
+	private void setupHelper(BoardCell cell, int diceRoll) {
 		startingPoint = cell;
 		visited.clear();
 		visited.add(startingPoint);
 		targets.clear();
 		findAllTargets(cell, diceRoll);
-	}
-
-	public void calcTargets(int i, int j, int diceRoll) {
-		startingPoint = getBoardCell(i, j);
-		visited.clear();
-		visited.add(startingPoint);
-		targets.clear();
-		findAllTargets(startingPoint, diceRoll);
 	}
 	
 	public void findAllTargets(BoardCell cell, int diceRoll) {

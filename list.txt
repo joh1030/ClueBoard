@@ -1,7 +1,7 @@
 close scanner (x)
 remove unnecessary variables
 fix calcAdjacencies 
-have two calcTargets: combine into one
+have two calcTargets: combine into one(x)
 remove unnecessary comments (x)
 remove unused class (main) (x)
 consolidate panel functions into one function (x)
