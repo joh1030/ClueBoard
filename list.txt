@@ -1,6 +1,6 @@
 close scanner (x)
-remove unnecessary variables
-fix calcAdjacencies 
+remove unnecessary variables(x)
+fix calcAdjacencies (x)
 have two calcTargets: combine into one(x)
 remove unnecessary comments (x)
 remove unused class (main) (x)
