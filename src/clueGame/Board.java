@@ -74,9 +74,6 @@ public class Board extends JPanel {
 			lineCount++;
 			if( scan.hasNextLine() ) {
 				scan.nextLine();
-				/*String[] tempLine2 = temp.split(",");
-				cellCount2 = tempLine2.length;
-				if (cellCount2 != cellCount) throw new BadConfigFormatException();*/
 			}
 		}
 		scan.close();

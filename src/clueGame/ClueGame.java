@@ -3,6 +3,7 @@ package clueGame;
 import javax.swing.*;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -15,9 +16,13 @@ import java.util.Random;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 
 public class ClueGame extends JFrame{
 
@@ -35,12 +40,12 @@ public class ClueGame extends JFrame{
 	private String legendFile;
 	private String playersFile;
 	private String weaponsFile;
-	
+
 	DetectiveNotes notes;
-	
+
 	// used for the length of each squares on the board
 	public static final int SQUARE_LENGTH = 30; 
-	
+
 	// creates a menu bar
 	private JMenu createFileMenu() {
 		JMenu menu = new JMenu("File"); 
@@ -53,7 +58,8 @@ public class ClueGame extends JFrame{
 		JMenuItem item = new JMenuItem("Exit");
 		class MenuItemListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) { 
-				System.exit(0); // close windows when chosen
+				// close windows when chosen
+				System.exit(0); 
 			}
 		}
 		item.addActionListener(new MenuItemListener());
@@ -71,6 +77,39 @@ public class ClueGame extends JFrame{
 		}
 		item.addActionListener(new MenuItemListener());
 		return item;
+	}
+
+	public JPanel createMyCardsPanel(ArrayList<Card> cards) {
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(4,0));
+		// title
+		JLabel titleLabel = new JLabel("My Cards");
+		panel.add(titleLabel);
+		// people
+		JPanel peoplePanel = new JPanel();
+		peoplePanel.setBorder(new TitledBorder(new EtchedBorder(), "People"));
+		// Rooms
+		JPanel roomsPanel = new JPanel();
+		roomsPanel.setBorder(new TitledBorder(new EtchedBorder(), "Rooms"));
+		// Weapons
+		JPanel weaponsPanel = new JPanel();
+		weaponsPanel.setBorder(new TitledBorder(new EtchedBorder(), "Weapons"));
+		for (Card c : cards) {
+			JTextField field = new JTextField(c.getName());;
+			if (c.getCardType() == c.cardType.ROOM) {
+				peoplePanel.add(field);
+			}
+			if (c.getCardType() == c.cardType.PERSON) {
+				roomsPanel.add(field);
+			}
+			if (c.getCardType() == c.cardType.WEAPON) {
+				weaponsPanel.add(field);
+			}
+		}
+		panel.add(peoplePanel);
+		panel.add(roomsPanel);
+		panel.add(weaponsPanel);
+		return panel;
 	}
 
 	public static void main(String[] args) {
@@ -104,12 +143,15 @@ public class ClueGame extends JFrame{
 		setTitle("Clue Game");
 		board.setPlayers(this.players);
 		add(board,BorderLayout.CENTER);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		menuBar.add(createFileMenu());
+
 		// makes splash screen
 		JOptionPane.showMessageDialog(this, "You are " + this.players.get(0).getName() +" press Next Player to begin play", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE );
+		// create my cards panel then adds to jframe
+		add(createMyCardsPanel(this.players.get(0).getMyCards()), BorderLayout.EAST);
 	}
 
 	public ClueGame(String layout, String legend) {
