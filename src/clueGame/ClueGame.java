@@ -47,7 +47,7 @@ public class ClueGame extends JFrame{
 	private JTextField name, roll, guess, response;
 
 	// used for the length of each squares on the board
-	public static final int SQUARE_LENGTH = 30; 
+	public static final int SQUARE_LENGTH = 20; 
 
 	// creates a menu bar
 	private JMenu createFileMenu() {
@@ -187,9 +187,9 @@ public class ClueGame extends JFrame{
 		} catch (FileNotFoundException | BadConfigFormatException e) {
 			e.printStackTrace();
 		}
-
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize((board.getNumRows()+1)*SQUARE_LENGTH, (board.getNumColumns()+2)*SQUARE_LENGTH);
+		setSize(board.getNumRows() * SQUARE_LENGTH + 125, board.getNumColumns() * SQUARE_LENGTH + 175);
 		setTitle("Clue Game");
 		board.setPlayers(this.players);
 		add(board,BorderLayout.CENTER);
@@ -231,7 +231,6 @@ public class ClueGame extends JFrame{
 				cards.add(new Card(entry.getValue(),Card.CardType.ROOM));
 			}
 		}
-
 	}
 
 	public void loadPlayers(String playerFile) throws FileNotFoundException {
@@ -270,7 +269,6 @@ public class ClueGame extends JFrame{
 			weaponCards.add(new Card(weaponName,Card.CardType.WEAPON));
 			cards.add(new Card(weaponName,Card.CardType.WEAPON));
 		}
-		// CHANGE: close scanner
 		scan.close();
 	}
 
