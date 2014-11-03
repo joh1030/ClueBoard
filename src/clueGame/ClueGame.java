@@ -41,12 +41,6 @@ public class ClueGame extends JFrame{
 	// used for the length of each squares on the board
 	public static final int SQUARE_LENGTH = 30; 
 	
-	// creates detective notes
-	private void createNotes() {
-		notes = new DetectiveNotes(peopleCards,roomCards,weaponCards);
-		notes.setVisible(true);
-	}
-	
 	// creates a menu bar
 	private JMenu createFileMenu() {
 		JMenu menu = new JMenu("File"); 
@@ -70,7 +64,9 @@ public class ClueGame extends JFrame{
 		JMenuItem item = new JMenuItem("Show Notes");
 		class MenuItemListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
-				notes.setVisible(true); // place DetectiveNotes on top of all windows when chosen
+				// creates detective notes when chosen
+				notes = new DetectiveNotes(peopleCards,roomCards,weaponCards);
+				notes.setVisible(true);
 			}
 		}
 		item.addActionListener(new MenuItemListener());
@@ -109,11 +105,11 @@ public class ClueGame extends JFrame{
 		board.setPlayers(this.players);
 		add(board,BorderLayout.CENTER);
 		
-		createNotes();
-		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		menuBar.add(createFileMenu());
+		// makes splash screen
+		JOptionPane.showMessageDialog(this, "You are " + this.players.get(0).getName() +" press Next Player to begin play", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE );
 	}
 
 	public ClueGame(String layout, String legend) {
