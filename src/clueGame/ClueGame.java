@@ -15,6 +15,7 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -42,6 +43,8 @@ public class ClueGame extends JFrame{
 	private String weaponsFile;
 
 	DetectiveNotes notes;
+	
+	private JTextField name, roll, guess, response;
 
 	// used for the length of each squares on the board
 	public static final int SQUARE_LENGTH = 30; 
@@ -78,8 +81,9 @@ public class ClueGame extends JFrame{
 		item.addActionListener(new MenuItemListener());
 		return item;
 	}
-
-	public JPanel createMyCardsPanel(ArrayList<Card> cards) {
+	
+	// creates my cards panel
+	public void createMyCardsPanel(ArrayList<Card> cards, JFrame frame) {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(4,0));
 		// title
@@ -109,7 +113,53 @@ public class ClueGame extends JFrame{
 		panel.add(peoplePanel);
 		panel.add(roomsPanel);
 		panel.add(weaponsPanel);
-		return panel;
+		frame.add(panel, BorderLayout.EAST);
+	}
+	
+	// creates control panel
+	public void createControlPanel(JFrame frame) {
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(2,3));
+		// Name Panel
+		JPanel namePanel;
+		namePanel = new JPanel();
+		JLabel nameLabel = new JLabel("Whose turn?");
+		name = new JTextField(15);
+		namePanel.add(nameLabel);
+		namePanel.add(name);
+		panel.add(namePanel);
+		// Next Player Button
+		JButton nextPlayerButton = new JButton("NEXT PLAYER");
+		panel.add(nextPlayerButton);
+		// Accusation Button
+		JButton accusationButton = new JButton("MAKE ACCUSATION");
+		panel.add(accusationButton);
+		// Roll Panel
+		JPanel rollPanel = new JPanel();
+		JLabel rollLabel = new JLabel("Roll");
+		roll = new JTextField(4);
+		rollPanel.add(rollLabel);
+		rollPanel.add(roll);
+		rollPanel.setBorder(new TitledBorder(new EtchedBorder(), "Die"));
+		panel.add(rollPanel);
+		// Guess Panel
+		JPanel guessPanel = new JPanel();
+		JLabel guessLabel = new JLabel("Guess");
+		guess = new JTextField(10);
+		guessPanel.add(guessLabel);
+		guessPanel.add(guess);
+		guessPanel.setBorder(new TitledBorder(new EtchedBorder(), "Guess"));
+		panel.add(guessPanel);
+		// Response Panel
+		JPanel responsePanel = new JPanel();
+		JLabel responseLabel = new JLabel("Response");
+		response = new JTextField(10);
+		responsePanel.add(responseLabel);
+		responsePanel.add(response);
+		responsePanel.setBorder(new TitledBorder(new EtchedBorder(), "Guess Result"));
+		panel.add(responsePanel);
+		// Add panel to JFrame
+		frame.add(panel, BorderLayout.SOUTH);
 	}
 
 	public static void main(String[] args) {
@@ -151,7 +201,8 @@ public class ClueGame extends JFrame{
 		// makes splash screen
 		JOptionPane.showMessageDialog(this, "You are " + this.players.get(0).getName() +" press Next Player to begin play", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE );
 		// create my cards panel then adds to jframe
-		add(createMyCardsPanel(this.players.get(0).getMyCards()), BorderLayout.EAST);
+		createMyCardsPanel(this.players.get(0).getMyCards(), this);
+		createControlPanel(this);
 	}
 
 	public ClueGame(String layout, String legend) {
