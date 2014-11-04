@@ -211,7 +211,7 @@ public class Board extends JPanel {
 		visited.clear();
 		visited.add(startingPoint);
 		targets.clear();
-		//calcAdjacencies();
+		calcAdjacencies();
 		findAllTargets(cell, diceRoll);
 	}
 	
