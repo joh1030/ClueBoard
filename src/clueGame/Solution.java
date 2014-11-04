@@ -4,6 +4,12 @@ public class Solution {
 
 	public String person, weapon, room;
 	
+	@Override
+	public String toString() {
+		return "Solution [person=" + person + ", weapon=" + weapon + ", room="
+				+ room + "]";
+	}
+
 	public Solution(String person,String weapon,String room){
 		this.person = person;
 		this.room = room;

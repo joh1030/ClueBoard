@@ -2,6 +2,11 @@ package clueGame;
 
 public class Card {
 	
+	@Override
+	public String toString() {
+		return "Card [name=" + name + "]";
+	}
+
 	public enum CardType {
 		ROOM, WEAPON, PERSON;
 	}

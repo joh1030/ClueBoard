@@ -83,4 +83,9 @@ public class Player {
 	public int getCol() {
 		return col;
 	}
+	
+	public void setLocation(BoardCell cell) {
+		row = cell.getRow();
+		col = cell.getColumn();
+	}
 }

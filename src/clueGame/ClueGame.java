@@ -10,10 +10,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -41,6 +43,7 @@ public class ClueGame extends JFrame{
 	private String legendFile;
 	private String playersFile;
 	private String weaponsFile;
+	private int currentPlayer;
 
 	DetectiveNotes notes;
 	
@@ -100,10 +103,10 @@ public class ClueGame extends JFrame{
 		weaponsPanel.setBorder(new TitledBorder(new EtchedBorder(), "Weapons"));
 		for (Card c : cards) {
 			JTextField field = new JTextField(c.getName());;
-			if (c.getCardType() == c.cardType.ROOM) {
+			if (c.getCardType() == c.cardType.PERSON) {
 				peoplePanel.add(field);
 			}
-			if (c.getCardType() == c.cardType.PERSON) {
+			if (c.getCardType() == c.cardType.ROOM) {
 				roomsPanel.add(field);
 			}
 			if (c.getCardType() == c.cardType.WEAPON) {
@@ -116,6 +119,16 @@ public class ClueGame extends JFrame{
 		frame.add(panel, BorderLayout.EAST);
 	}
 	
+	private class ButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			currentPlayer = 2;
+			makeMove(4);
+			// currentPlayer++
+		}
+	}
+
 	// creates control panel
 	public void createControlPanel(JFrame frame) {
 		JPanel panel = new JPanel();
@@ -130,6 +143,7 @@ public class ClueGame extends JFrame{
 		panel.add(namePanel);
 		// Next Player Button
 		JButton nextPlayerButton = new JButton("NEXT PLAYER");
+		nextPlayerButton.addActionListener(new ButtonListener());
 		panel.add(nextPlayerButton);
 		// Accusation Button
 		JButton accusationButton = new JButton("MAKE ACCUSATION");
@@ -189,19 +203,22 @@ public class ClueGame extends JFrame{
 		}
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(board.getNumRows() * SQUARE_LENGTH + 125, board.getNumColumns() * SQUARE_LENGTH + 175);
+		setSize((board.getNumRows() + 10) * SQUARE_LENGTH, (board.getNumColumns() + 10) * SQUARE_LENGTH);
 		setTitle("Clue Game");
 		board.setPlayers(this.players);
 		add(board,BorderLayout.CENTER);
-
+		// make menu bar
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		menuBar.add(createFileMenu());
-
 		// makes splash screen
-		JOptionPane.showMessageDialog(this, "You are " + this.players.get(0).getName() +" press Next Player to begin play", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE );
+		JOptionPane.showMessageDialog(this, "You are " + this.players.get(currentPlayer).getName() +" press Next Player to begin play", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE );
+		selectAnswer();
+		//System.out.println(solution);
+		//System.out.println(cards);
+		deal();
 		// create my cards panel then adds to jframe
-		createMyCardsPanel(this.players.get(0).getMyCards(), this);
+		createMyCardsPanel(this.players.get(currentPlayer).getMyCards(), this);
 		createControlPanel(this);
 	}
 
@@ -215,8 +232,11 @@ public class ClueGame extends JFrame{
 		board.loadBoardDimensions(layoutFile);
 		board.loadBoardConfig(layoutFile);
 		loadPlayers(playersFile);
-		loadWeapons(weaponsFile);	
+		//System.out.println(cards);
+		loadWeapons(weaponsFile);
+		//System.out.println(cards);
 		loadRoomCards();
+		//System.out.println(cards);
 		for(Player p: players){
 			if(p instanceof ComputerPlayer){
 				((ComputerPlayer) p).setAllCards(cards);
@@ -228,13 +248,13 @@ public class ClueGame extends JFrame{
 		for(Entry<Character, String> entry : board.getRooms().entrySet()){
 			if(!entry.getValue().equals("Walkway") && !entry.getValue().equals("Closet") && !entry.getValue().equals("Hallway")){
 				roomCards.add(new Card(entry.getValue(),Card.CardType.ROOM));
-				cards.add(new Card(entry.getValue(),Card.CardType.ROOM));
 			}
 		}
+		cards.addAll(roomCards);
 	}
 
 	public void loadPlayers(String playerFile) throws FileNotFoundException {
-
+		currentPlayer = 0;
 		boolean isHuman=true;
 		players = new ArrayList<Player>();
 		FileReader reader = new FileReader(playerFile);
@@ -247,16 +267,16 @@ public class ClueGame extends JFrame{
 			color = scan.next();
 			row = scan.nextInt();
 			col = scan.nextInt();
-			peopleCards.add(new Card(firstName+" "+lastName,Card.CardType.PERSON));
-			cards.add(new Card(firstName+" "+lastName,Card.CardType.PERSON));
-			if(isHuman){
-				players.add(new HumanPlayer(firstName +" " + lastName, color, row, col));
+			peopleCards.add(new Card(firstName+" "+lastName, Card.CardType.PERSON));
+			if(isHuman) {
+				players.add(new HumanPlayer(firstName + " " + lastName, color, row, col));
+				isHuman = false;
 			}
-			else{
+			else {
 				players.add(new ComputerPlayer(firstName  +" " + lastName, color, row, col));
 			}
 		}
-		// CHANGE: close scanner
+		cards.addAll(peopleCards);
 		scan.close();
 	}
 
@@ -266,9 +286,9 @@ public class ClueGame extends JFrame{
 		String weaponName;
 		while (scan.hasNext()) {
 			weaponName = scan.next();
-			weaponCards.add(new Card(weaponName,Card.CardType.WEAPON));
-			cards.add(new Card(weaponName,Card.CardType.WEAPON));
+			weaponCards.add(new Card(weaponName, Card.CardType.WEAPON));
 		}
+		cards.addAll(weaponCards);
 		scan.close();
 	}
 
@@ -285,7 +305,7 @@ public class ClueGame extends JFrame{
 	public void selectAnswer(){
 		Card person,weapon,room;
 		Random rand = new Random();
-		int  n = rand.nextInt(peopleCards.size());
+		int n = rand.nextInt(peopleCards.size());
 		person=peopleCards.get(n);
 		cards.remove(person);
 
@@ -296,6 +316,7 @@ public class ClueGame extends JFrame{
 		n = rand.nextInt(roomCards.size());
 		room=roomCards.get(n);
 		cards.remove(room);
+		
 		solution = new Solution(person.getName(),weapon.getName(),room.getName());
 	}
 
@@ -303,9 +324,8 @@ public class ClueGame extends JFrame{
 		while(!cards.isEmpty()){
 			for(Player p: players){
 				if(!cards.isEmpty()){
-
 					Random rand = new Random();
-					int  n = rand.nextInt(cards.size());
+					int n = rand.nextInt(cards.size());
 					Card card = cards.get(n);
 					p.addCard(card);
 					cards.remove(card);
@@ -343,5 +363,13 @@ public class ClueGame extends JFrame{
 
 	public void setSolution(Solution solutionIn){
 		solution = solutionIn;
+	}
+	
+	public void makeMove(int diceRoll) {
+		board.calcTargets(players.get(currentPlayer).getRow(), players.get(currentPlayer).getCol(), diceRoll);
+		Set<BoardCell> targets = board.getTargets();
+		BoardCell cell = ((ComputerPlayer) players.get(currentPlayer)).pickLocation(targets);
+		players.get(currentPlayer).setLocation(cell);
+		board.repaint();
 	}
 }

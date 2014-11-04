@@ -55,7 +55,6 @@ public class Board extends JPanel {
 		    row=Integer.parseInt(tempLine[1]);
 		    g.drawString(name, row*ClueGame.SQUARE_LENGTH, col*ClueGame.SQUARE_LENGTH);
 		}
-		
 	}
 
 	public void loadBoardDimensions(String layoutFile) throws BadConfigFormatException, FileNotFoundException {
@@ -131,7 +130,6 @@ public class Board extends JPanel {
 				temp = scan.nextLine();
 			}
 		}
-
 		scan.close();
 	}
 	
@@ -152,7 +150,6 @@ public class Board extends JPanel {
 			rooms.put(tempLine[0].charAt(0), tempLine[1].trim());
 			roomNames.put(tempLine[1], tempLine[2]+","+tempLine[3]);
 		}
-
 		scan.close();
 	}
 
@@ -214,11 +211,13 @@ public class Board extends JPanel {
 		visited.clear();
 		visited.add(startingPoint);
 		targets.clear();
+		//calcAdjacencies();
 		findAllTargets(cell, diceRoll);
 	}
 	
 	public void findAllTargets(BoardCell cell, int diceRoll) {
 		LinkedList<BoardCell> temp = getAdjList(cell);
+		System.out.println(temp); // adjacency list is empty???
 		LinkedList<BoardCell> notYetVisited = new LinkedList<BoardCell>();
 		for(BoardCell adj : temp) {
 			if(!visited.contains(adj)) notYetVisited.add(adj);
@@ -252,7 +251,6 @@ public class Board extends JPanel {
 	public LinkedList<BoardCell> getAdjList(int i, int j) {
 		return adjLists.get(getBoardCell(i, j));
 	}
-
 
 	public BoardCell getBoardCell(int row, int col) {
 		return layout[row][col];
