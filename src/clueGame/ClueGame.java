@@ -48,6 +48,10 @@ public class ClueGame extends JFrame{
 	DetectiveNotes notes;
 	
 	private JTextField name, roll, guess, response;
+	
+	private boolean humanMustFinish;
+	
+	int diceRoll;
 
 	// used for the length of each squares on the board
 	public static final int SQUARE_LENGTH = 20; 
@@ -119,13 +123,22 @@ public class ClueGame extends JFrame{
 		frame.add(panel, BorderLayout.EAST);
 	}
 	
-	private class ButtonListener implements ActionListener
-	{
-		public void actionPerformed(ActionEvent e)
-		{
-			currentPlayer = 2;
-			makeMove(4);
-			// currentPlayer++
+	private class NextPlayerButtonListener implements ActionListener {
+		ClueGame game;
+		public void actionPerformed(ActionEvent e) {
+			if (humanMustFinish == false) {
+				if (players.get(currentPlayer) instanceof HumanPlayer) {
+					((HumanPlayer)players.get(currentPlayer)).makeMove();
+					currentPlayer++;
+				}
+				else {
+					makeMove(diceRoll);
+					currentPlayer++;
+				}
+			}
+			else {
+				JOptionPane.showMessageDialog(game, "You need to finish your turn", "Message", JOptionPane.INFORMATION_MESSAGE );
+			}
 		}
 	}
 
@@ -143,7 +156,7 @@ public class ClueGame extends JFrame{
 		panel.add(namePanel);
 		// Next Player Button
 		JButton nextPlayerButton = new JButton("NEXT PLAYER");
-		nextPlayerButton.addActionListener(new ButtonListener());
+		nextPlayerButton.addActionListener(new NextPlayerButtonListener());
 		panel.add(nextPlayerButton);
 		// Accusation Button
 		JButton accusationButton = new JButton("MAKE ACCUSATION");
@@ -219,6 +232,9 @@ public class ClueGame extends JFrame{
 		deal();
 		// create my cards panel then adds to jframe
 		createMyCardsPanel(this.players.get(currentPlayer).getMyCards(), this);
+		
+		humanMustFinish = false;
+		
 		createControlPanel(this);
 	}
 
