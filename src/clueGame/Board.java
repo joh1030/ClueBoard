@@ -28,6 +28,7 @@ public class Board extends JPanel {
 	private BoardCell startingPoint  = null;
 	private ArrayList<Player> players;
 	private Map<String,String> roomNames= new HashMap<String,String>();
+	private boolean humanplayer;
 
 	public Board(String layoutFile) throws FileNotFoundException, BadConfigFormatException {
 		loadBoardDimensions(layoutFile);
@@ -54,6 +55,10 @@ public class Board extends JPanel {
 		    col=Integer.parseInt(tempLine[0]);
 		    row=Integer.parseInt(tempLine[1]);
 		    g.drawString(name, row*ClueGame.SQUARE_LENGTH, col*ClueGame.SQUARE_LENGTH);
+		}
+		
+		if(humanplayer){
+			//draw targets
 		}
 	}
 
@@ -274,5 +279,9 @@ public class Board extends JPanel {
 	
 	public void setPlayers(ArrayList<Player> player){
 		players = player;
+	}
+	
+	public void humanplay(boolean isHuman) {
+		humanplayer = isHuman;
 	}
 }

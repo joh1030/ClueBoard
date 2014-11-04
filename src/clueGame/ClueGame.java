@@ -372,7 +372,7 @@ public class ClueGame extends JFrame{
 			diceRoll = (new Random()).nextInt(6) + 1;
 			if (humanMustFinish == false) {
 				if (players.get(currentPlayer) instanceof HumanPlayer) {
-					((HumanPlayer)players.get(currentPlayer)).makeMove();
+					((HumanPlayer)players.get(currentPlayer)).makeMove(diceRoll);
 					currentPlayer = (currentPlayer + 1) % players.size();
 				}
 				else {

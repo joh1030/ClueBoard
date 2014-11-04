@@ -6,7 +6,7 @@ public class HumanPlayer extends Player {
 		super(name,color,row,col);
 	}
 	
-	public void makeMove() {
+	public void makeMove(int diceRoll) {
 		
 	}
 }
