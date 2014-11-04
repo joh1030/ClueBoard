@@ -1,6 +1,9 @@
 package clueGame;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -12,6 +15,7 @@ import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import clueGame.RoomCell.DoorDirection;
@@ -29,12 +33,36 @@ public class Board extends JPanel {
 	private ArrayList<Player> players;
 	private Map<String,String> roomNames= new HashMap<String,String>();
 	private boolean humanplayer;
+	private int currentPlayer;
 
 	public Board(String layoutFile) throws FileNotFoundException, BadConfigFormatException {
 		loadBoardDimensions(layoutFile);
 		layout = new BoardCell[numRows][numColumns];
 	}
 	
+	private class TargetListener implements MouseListener {
+		public void mousePressed (MouseEvent event) {
+			if(humanplayer) {
+				for(BoardCell b : targets) {
+					if(b.isWithin(event.getY(), event.getX())){
+						players.get(currentPlayer).setLocation(b);
+						((HumanPlayer)players.get(currentPlayer)).setMustPlay(false);
+						humanplayer = false;
+						break;
+					} else {
+						
+					}
+				}
+			}
+			repaint();
+		}
+		
+		public void mouseClicked (MouseEvent event) {}
+		public void mouseReleased (MouseEvent event) {}
+		public void mouseEntered (MouseEvent event) {}
+		public void mouseExited (MouseEvent event) {}
+	}
+
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -43,6 +71,14 @@ public class Board extends JPanel {
 				layout[i][j].draw(g,this);
 			}
 		}
+		
+		if(humanplayer){
+			for (BoardCell b : targets) {
+				g.setColor(Color.CYAN);
+				g.fillRect(b.getColumn()*ClueGame.SQUARE_LENGTH, b.getRow()*ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH);
+			}
+		}
+		
 		for(Player p : players){
 			p.draw(g);
 		}
@@ -57,9 +93,7 @@ public class Board extends JPanel {
 		    g.drawString(name, row*ClueGame.SQUARE_LENGTH, col*ClueGame.SQUARE_LENGTH);
 		}
 		
-		if(humanplayer){
-			//draw targets
-		}
+		addMouseListener(new TargetListener());
 	}
 
 	public void loadBoardDimensions(String layoutFile) throws BadConfigFormatException, FileNotFoundException {
@@ -283,5 +317,13 @@ public class Board extends JPanel {
 	
 	public void humanplay(boolean isHuman) {
 		humanplayer = isHuman;
+	}
+
+	public int getCurrentPlayer() {
+		return currentPlayer;
+	}
+
+	public void setCurrentPlayer(int currentPlayer) {
+		this.currentPlayer = currentPlayer;
 	}
 }

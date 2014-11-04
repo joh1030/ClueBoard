@@ -88,4 +88,8 @@ public class Player {
 		row = cell.getRow();
 		col = cell.getColumn();
 	}
+	
+	public boolean getMustPlay() {
+		return false;
+	}
 }

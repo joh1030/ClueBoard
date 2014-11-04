@@ -48,9 +48,7 @@ public class ClueGame extends JFrame{
 	DetectiveNotes notes;
 	
 	private JTextField name, roll, guess, response;
-	
-	private boolean humanMustFinish;
-	
+
 	private int diceRoll;
 
 	// used for the length of each squares on the board
@@ -209,14 +207,10 @@ public class ClueGame extends JFrame{
 		// makes splash screen
 		JOptionPane.showMessageDialog(this, "You are " + this.players.get(currentPlayer).getName() +" press Next Player to begin play", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE );
 		selectAnswer();
-		//System.out.println(solution);
-		//System.out.println(cards);
 		deal();
 		// create my cards panel then adds to jframe
 		createMyCardsPanel(this.players.get(currentPlayer).getMyCards(), this);
-		
-		humanMustFinish = false;
-		
+
 		createControlPanel(this);
 	}
 
@@ -236,6 +230,8 @@ public class ClueGame extends JFrame{
 				((ComputerPlayer) p).setAllCards(cards);
 			}
 		}
+		board.calcTargets(players.get(currentPlayer).getRow(), players.get(currentPlayer).getCol(), new Random().nextInt(6)+1);
+		
 	}
 
 	private void loadRoomCards() {
@@ -263,7 +259,9 @@ public class ClueGame extends JFrame{
 			col = scan.nextInt();
 			peopleCards.add(new Card(firstName+" "+lastName, Card.CardType.PERSON));
 			if(isHuman) {
-				players.add(new HumanPlayer(firstName + " " + lastName, color, row, col));
+				Player temp = new HumanPlayer(firstName + " " + lastName, color, row, col);
+				board.humanplay(true);
+				players.add(temp);
 				isHuman = false;
 			}
 			else {
@@ -360,9 +358,14 @@ public class ClueGame extends JFrame{
 	
 	public void makeMove(int diceRoll) {
 		board.calcTargets(players.get(currentPlayer).getRow(), players.get(currentPlayer).getCol(), diceRoll);
-		Set<BoardCell> targets = board.getTargets();
-		BoardCell cell = ((ComputerPlayer) players.get(currentPlayer)).pickLocation(targets);
-		players.get(currentPlayer).setLocation(cell);
+		
+		if(players.get(currentPlayer) instanceof HumanPlayer){
+			board.humanplay(true);
+		} else {
+			Set<BoardCell> targets = board.getTargets();
+			BoardCell cell = ((ComputerPlayer) players.get(currentPlayer)).pickLocation(targets);
+			players.get(currentPlayer).setLocation(cell);
+		}
 		board.repaint();
 	}
 	
@@ -370,17 +373,15 @@ public class ClueGame extends JFrame{
 		ClueGame game;
 		public void actionPerformed(ActionEvent e) {
 			diceRoll = (new Random()).nextInt(6) + 1;
-			if (humanMustFinish == false) {
-				if (players.get(currentPlayer) instanceof HumanPlayer) {
-					((HumanPlayer)players.get(currentPlayer)).makeMove(diceRoll);
-					currentPlayer = (currentPlayer + 1) % players.size();
+			if (!( (players.get(currentPlayer) instanceof HumanPlayer) && (players.get(currentPlayer)).getMustPlay()) ) {
+				currentPlayer = (currentPlayer + 1) % players.size();
+				if(players.get(currentPlayer) instanceof HumanPlayer){
+					((HumanPlayer)players.get(currentPlayer)).setMustPlay(true);
 				}
-				else {
-					makeMove(diceRoll);
-					currentPlayer = (currentPlayer + 1) % players.size();
-				}
-			}
-			else {
+				board.setCurrentPlayer(currentPlayer);
+				makeMove(diceRoll);
+
+			} else {
 				JOptionPane.showMessageDialog(game, "You need to finish your turn", "Message", JOptionPane.INFORMATION_MESSAGE );
 			}
 		}

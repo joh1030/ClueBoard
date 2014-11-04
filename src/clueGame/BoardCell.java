@@ -40,4 +40,11 @@ public abstract class BoardCell {
 		return false;
 	}
 	
+	public boolean isWithin(int i, int j){
+		if( (i >= row*ClueGame.SQUARE_LENGTH) && (i < (row+1)*ClueGame.SQUARE_LENGTH) && (j >= column*ClueGame.SQUARE_LENGTH) && (j < (column+1)*ClueGame.SQUARE_LENGTH) ) {
+			return true;
+		} else {
+			return false;
+	}
+	}
 }
