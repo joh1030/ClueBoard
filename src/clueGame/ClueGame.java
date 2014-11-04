@@ -51,7 +51,7 @@ public class ClueGame extends JFrame{
 	
 	private boolean humanMustFinish;
 	
-	int diceRoll;
+	private int diceRoll;
 
 	// used for the length of each squares on the board
 	public static final int SQUARE_LENGTH = 20; 
@@ -123,24 +123,6 @@ public class ClueGame extends JFrame{
 		frame.add(panel, BorderLayout.EAST);
 	}
 	
-	private class NextPlayerButtonListener implements ActionListener {
-		ClueGame game;
-		public void actionPerformed(ActionEvent e) {
-			if (humanMustFinish == false) {
-				if (players.get(currentPlayer) instanceof HumanPlayer) {
-					((HumanPlayer)players.get(currentPlayer)).makeMove();
-					currentPlayer++;
-				}
-				else {
-					makeMove(diceRoll);
-					currentPlayer++;
-				}
-			}
-			else {
-				JOptionPane.showMessageDialog(game, "You need to finish your turn", "Message", JOptionPane.INFORMATION_MESSAGE );
-			}
-		}
-	}
 
 	// creates control panel
 	public void createControlPanel(JFrame frame) {
@@ -353,7 +335,6 @@ public class ClueGame extends JFrame{
 			return false;
 		if(!solutionIn.getRoom().equalsIgnoreCase(solution.getRoom()))
 			return false;
-
 		return true;
 	}
 	public void handleSuggestion(String person,String room, String weapon, Player accusingPlayer){
@@ -383,5 +364,25 @@ public class ClueGame extends JFrame{
 		BoardCell cell = ((ComputerPlayer) players.get(currentPlayer)).pickLocation(targets);
 		players.get(currentPlayer).setLocation(cell);
 		board.repaint();
+	}
+	
+	private class NextPlayerButtonListener implements ActionListener {
+		ClueGame game;
+		public void actionPerformed(ActionEvent e) {
+			diceRoll = (new Random()).nextInt(6) + 1;
+			if (humanMustFinish == false) {
+				if (players.get(currentPlayer) instanceof HumanPlayer) {
+					((HumanPlayer)players.get(currentPlayer)).makeMove();
+					currentPlayer = (currentPlayer + 1) % players.size();
+				}
+				else {
+					makeMove(diceRoll);
+					currentPlayer = (currentPlayer + 1) % players.size();
+				}
+			}
+			else {
+				JOptionPane.showMessageDialog(game, "You need to finish your turn", "Message", JOptionPane.INFORMATION_MESSAGE );
+			}
+		}
 	}
 }

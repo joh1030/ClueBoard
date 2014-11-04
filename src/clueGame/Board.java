@@ -204,7 +204,6 @@ public class Board extends JPanel {
 	}
 
 	public void calcTargets(int i, int j, int diceRoll) {
-		System.out.println(i + "" + j);
 		setupHelper(getBoardCell(i, j), diceRoll);
 	}
 	
