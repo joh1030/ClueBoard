@@ -228,15 +228,11 @@ public class ClueGame extends JFrame{
 
 	public void loadConfigFiles() throws FileNotFoundException, BadConfigFormatException {
 		board.loadLegend(legendFile);
-		//then load board layout
-		board.loadBoardDimensions(layoutFile);
 		board.loadBoardConfig(layoutFile);
+		
 		loadPlayers(playersFile);
-		//System.out.println(cards);
 		loadWeapons(weaponsFile);
-		//System.out.println(cards);
 		loadRoomCards();
-		//System.out.println(cards);
 		for(Player p: players){
 			if(p instanceof ComputerPlayer){
 				((ComputerPlayer) p).setAllCards(cards);

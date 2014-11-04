@@ -131,6 +131,7 @@ public class Board extends JPanel {
 			}
 		}
 		scan.close();
+		this.calcAdjacencies();
 	}
 	
 	public void loadLegend(String legendFile) throws FileNotFoundException, BadConfigFormatException {
@@ -203,6 +204,7 @@ public class Board extends JPanel {
 	}
 
 	public void calcTargets(int i, int j, int diceRoll) {
+		System.out.println(i + "" + j);
 		setupHelper(getBoardCell(i, j), diceRoll);
 	}
 	
@@ -211,13 +213,11 @@ public class Board extends JPanel {
 		visited.clear();
 		visited.add(startingPoint);
 		targets.clear();
-		calcAdjacencies();
 		findAllTargets(cell, diceRoll);
 	}
 	
 	public void findAllTargets(BoardCell cell, int diceRoll) {
 		LinkedList<BoardCell> temp = getAdjList(cell);
-		System.out.println(temp); // adjacency list is empty???
 		LinkedList<BoardCell> notYetVisited = new LinkedList<BoardCell>();
 		for(BoardCell adj : temp) {
 			if(!visited.contains(adj)) notYetVisited.add(adj);

@@ -58,10 +58,10 @@ public class Player {
 	public void draw(Graphics g){
 		// fill players
 		g.setColor(roomColor);
-		g.fillOval(row*ClueGame.SQUARE_LENGTH, col*ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH);
+		g.fillOval(col*ClueGame.SQUARE_LENGTH, row*ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH);
 		// draw players
 		g.setColor(borderColor);
-		g.drawOval(row*ClueGame.SQUARE_LENGTH, col*ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH);
+		g.drawOval(col*ClueGame.SQUARE_LENGTH, row*ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH);
 	}
 	// getters
 	public ArrayList<Card> getMyCards() {
