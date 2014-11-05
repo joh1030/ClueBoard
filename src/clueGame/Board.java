@@ -41,26 +41,39 @@ public class Board extends JPanel {
 	}
 	
 	private class TargetListener implements MouseListener {
-		public void mousePressed (MouseEvent event) {
-			if(humanplayer) {
+		public void mouseClicked (MouseEvent event) {
+			if(humanplayer && withinArea(event.getY(),event.getX() )) {
+				boolean badmove = false;
 				for(BoardCell b : targets) {
 					if(b.isWithin(event.getY(), event.getX())){
 						players.get(currentPlayer).setLocation(b);
 						((HumanPlayer)players.get(currentPlayer)).setMustPlay(false);
 						humanplayer = false;
+						badmove = false;
 						break;
 					} else {
-						
+						badmove = true;
 					}
+				}
+				if(badmove) {
+					JOptionPane.showMessageDialog(null, "You need to select a valid target. Try again.", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE );
 				}
 			}
 			repaint();
 		}
 		
-		public void mouseClicked (MouseEvent event) {}
+		public void mousePressed (MouseEvent event) {}
 		public void mouseReleased (MouseEvent event) {}
 		public void mouseEntered (MouseEvent event) {}
 		public void mouseExited (MouseEvent event) {}
+	}
+	
+	private boolean withinArea(int i, int j) {
+		if( (i >= 0) && (i < numRows*ClueGame.SQUARE_LENGTH) && (j >= 0) && (j < numColumns*ClueGame.SQUARE_LENGTH) ) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override

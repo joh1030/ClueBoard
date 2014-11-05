@@ -39,12 +39,12 @@ public class GameSetupTests {
 		//test second line computer player
 		assertEquals("Colonel Mustard", game.getPlayers().get(1).getName());
 		assertEquals(Color.blue, game.getPlayers().get(1).getColor());
-		assertEquals(21, game.getPlayers().get(1).getRow());
+		assertEquals(20, game.getPlayers().get(1).getRow());
 		assertEquals(5, game.getPlayers().get(1).getCol());
 		//test third line computer player
 		assertEquals("Mrs. White", game.getPlayers().get(2).getName());
 		assertEquals(Color.cyan, game.getPlayers().get(2).getColor());
-		assertEquals(14, game.getPlayers().get(2).getRow());
+		assertEquals(12, game.getPlayers().get(2).getRow());
 		assertEquals(20, game.getPlayers().get(2).getCol());
 	}
 
@@ -53,9 +53,9 @@ public class GameSetupTests {
 		int people = 0, weapons =0, rooms=0;
 		boolean containsPerson = false, containsWeapon = false, containsRoom = false;
 		//System.out.println(game.getCards().size());
-		assertEquals(21,game.getCards().size());
+		assertEquals(21, game.getTempCards().size());
 		//get number of cards of each type
-		for(Card c: game.getCards()){
+		for(Card c: game.getTempCards()){
 			if(c.getCardType() == Card.CardType.PERSON){
 				//check if miss scarlett exists and is person
 				if(c.getName().contentEquals("Miss Scarlett")){

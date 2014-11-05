@@ -45,6 +45,6 @@ public abstract class BoardCell {
 			return true;
 		} else {
 			return false;
-	}
+		}
 	}
 }

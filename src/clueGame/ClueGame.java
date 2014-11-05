@@ -31,6 +31,7 @@ public class ClueGame extends JFrame{
 
 	private Map<Character,String> rooms = new HashMap<Character,String>();
 	private ArrayList<Card> cards = new ArrayList<Card>();
+	private ArrayList<Card> tempCards;
 	private ArrayList<Card> peopleCards = new ArrayList<Card>();
 	private ArrayList<Card> weaponCards = new ArrayList<Card>();
 	private ArrayList<Card> roomCards = new ArrayList<Card>();
@@ -206,6 +207,7 @@ public class ClueGame extends JFrame{
 		menuBar.add(createFileMenu());
 		// makes splash screen
 		JOptionPane.showMessageDialog(this, "You are " + this.players.get(currentPlayer).getName() +" press Next Player to begin play", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE );
+		tempCards = new ArrayList<Card>(cards);
 		selectAnswer();
 		deal();
 		// create my cards panel then adds to jframe
@@ -385,5 +387,9 @@ public class ClueGame extends JFrame{
 				JOptionPane.showMessageDialog(game, "You need to finish your turn", "Message", JOptionPane.INFORMATION_MESSAGE );
 			}
 		}
+	}
+	
+	public ArrayList<Card> getTempCards() {
+		return tempCards;
 	}
 }
