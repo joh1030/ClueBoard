@@ -161,11 +161,16 @@ public class ClueGame extends JFrame{
 	}
 
 	public static void main(String[] args) {
+		try {
 		ClueGame game = new ClueGame("ClueLayout.csv","ClueLegend.csv","players.txt","weapons.txt");
 		game.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
-	public ClueGame(String layout, String legend, String players, String weapons) {
+	public ClueGame(String layout, String legend, String players, String weapons) throws FileNotFoundException, BadConfigFormatException {
 
 		layoutFile = layout;
 		legendFile = legend;
@@ -175,15 +180,17 @@ public class ClueGame extends JFrame{
 		try {
 			board = new Board(layoutFile);
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			throw new FileNotFoundException();
 		} catch (BadConfigFormatException e) {
-			e.printStackTrace();
+			throw new BadConfigFormatException();
 		}
 
 		try {
 			loadConfigFiles();
-		} catch (FileNotFoundException | BadConfigFormatException e) {
-			e.printStackTrace();
+		} catch (BadConfigFormatException e) {
+			throw new BadConfigFormatException();
+		} catch (FileNotFoundException e ) {
+			throw new FileNotFoundException();
 		}
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -210,8 +217,8 @@ public class ClueGame extends JFrame{
 		updateRoll(diceRoll);
 	}
 
-	public ClueGame(String layout, String legend) {
-		this(layout,legend,"players.txt","weapons.txt");
+	public ClueGame(String layout, String legend) throws FileNotFoundException, BadConfigFormatException{
+			this(layout,legend,"players.txt","weapons.txt");
 	}
 
 	public void loadConfigFiles() throws FileNotFoundException, BadConfigFormatException {

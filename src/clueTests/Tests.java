@@ -118,22 +118,19 @@ public class Tests {
 	// Tests for exception if layout has wrong dimensions. 
 	@Test (expected = BadConfigFormatException.class)
 	public void testBadColumns() throws BadConfigFormatException, FileNotFoundException {
-		ClueGame game = new ClueGame("ClueLayoutBadColumns.csv", "ClueLegend.csv");
-		game.loadConfigFiles();
+		ClueGame game = new ClueGame("ClueLayoutBadColumns.csv", "ClueLegend.csv","players.txt","weapons.txt");
 	}
 	
 	// Tests for exception if layout has unrecognizable room.
 	@Test (expected = BadConfigFormatException.class)
 	public void testBadRoom() throws BadConfigFormatException, FileNotFoundException {
-		ClueGame game = new ClueGame("ClueLayoutBadRoom.txt","ClueLegend.csv");
-		game.loadConfigFiles();
+		ClueGame game = new ClueGame("ClueLayoutBadRoom.txt","ClueLegend.csv","players.txt","weapons.txt");
 	}
 	
 	// Tests for exception if legend file is unusable.
 	@Test (expected = BadConfigFormatException.class)
 	public void testBadRoomFormat() throws BadConfigFormatException, FileNotFoundException {
-		ClueGame game = new ClueGame("ClueLayout.csv","ClueLegendBadFormat.txt");
-		game.loadConfigFiles();
+		ClueGame game = new ClueGame("ClueLayout.csv","ClueLegendBadFormat.txt","players.txt","weapons.txt");
 	}
 	
 	///*// Tests adjacency for location with only adjacent walkways.
