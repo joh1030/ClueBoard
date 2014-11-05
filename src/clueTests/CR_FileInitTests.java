@@ -129,7 +129,7 @@ public class CR_FileInitTests {
 	@Test (expected = BadConfigFormatException.class)
 	public void testBadRoomFormat() throws BadConfigFormatException, FileNotFoundException {
 		// overloaded Board ctor takes config file name
-		ClueGame game = new ClueGame("ClueLayoutRader.csv", "ClueLegendBadFormatRader.txt");
+		ClueGame game = new ClueGame("ClueLayoutRader.csv", "ClueLegendBadFormatRader.txt","players.txt","weapons.txt");
 		game.loadConfigFiles();
 	}
 }

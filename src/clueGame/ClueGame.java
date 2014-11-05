@@ -217,7 +217,7 @@ public class ClueGame extends JFrame{
 		updateRoll(diceRoll);
 	}
 
-	public ClueGame(String layout, String legend) throws FileNotFoundException, BadConfigFormatException{
+	public ClueGame(String layout, String legend) throws FileNotFoundException, BadConfigFormatException {
 			this(layout,legend,"players.txt","weapons.txt");
 	}
 
