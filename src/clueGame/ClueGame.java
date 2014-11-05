@@ -203,7 +203,7 @@ public class ClueGame extends JFrame{
 		setJMenuBar(menuBar);
 		menuBar.add(createFileMenu());
 		// makes splash screen
-		JOptionPane.showMessageDialog(this, "You are " + this.players.get(currentPlayer).getName() +" press Next Player to begin play", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE );
+		//JOptionPane.showMessageDialog(this, "You are " + this.players.get(currentPlayer).getName() +" press Next Player to begin play", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE );
 		tempCards = new ArrayList<Card>(cards);
 		selectAnswer();
 		deal();

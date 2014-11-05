@@ -58,7 +58,6 @@ public class Board extends JPanel {
 						}
 					}
 					if(badmove) {
-
 						JOptionPane.showMessageDialog(null, "You need to select a valid target. Try again.", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE );
 						event.translatePoint(-(event.getX() + 1), -(event.getY() + 1));
 					}
