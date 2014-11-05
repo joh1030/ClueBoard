@@ -21,7 +21,7 @@ import javax.swing.JPanel;
 import clueGame.RoomCell.DoorDirection;
 
 public class Board extends JPanel {
-	
+
 	private BoardCell[][] layout;
 	private Map<Character,String> rooms = new HashMap<Character,String>();
 	private int numRows;
@@ -39,35 +39,33 @@ public class Board extends JPanel {
 		loadBoardDimensions(layoutFile);
 		layout = new BoardCell[numRows][numColumns];
 	}
-	
+
 	private class TargetListener implements MouseListener {
 		public void mouseClicked (MouseEvent event) {
-			if(humanplayer && withinArea(event.getY(),event.getX() )) {
-				boolean badmove = false;
-				for(BoardCell b : targets) {
-					if(b.isWithin(event.getY(), event.getX())){
-						players.get(currentPlayer).setLocation(b);
-						((HumanPlayer)players.get(currentPlayer)).setMustPlay(false);
-						humanplayer = false;
-						badmove = false;
-						break;
-					} else {
-						badmove = true;
-					}
+			boolean badmove = false;
+			for(BoardCell b : targets) {
+				if(b.isWithin(event.getY(), event.getX())){
+					players.get(currentPlayer).setLocation(b);
+					((HumanPlayer)players.get(currentPlayer)).setMustPlay(false);
+					humanplayer = false;
+					badmove = false;
+					break;
+				} else {
+					badmove = true;
 				}
-				if(badmove) {
-					JOptionPane.showMessageDialog(null, "You need to select a valid target. Try again.", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE );
-				}
+			}
+			if(badmove) {
+				JOptionPane.showMessageDialog(null, "You need to select a valid target. Try again.", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE );
 			}
 			repaint();
 		}
-		
+
 		public void mousePressed (MouseEvent event) {}
 		public void mouseReleased (MouseEvent event) {}
 		public void mouseEntered (MouseEvent event) {}
 		public void mouseExited (MouseEvent event) {}
 	}
-	
+
 	private boolean withinArea(int i, int j) {
 		if( (i >= 0) && (i < numRows*ClueGame.SQUARE_LENGTH) && (j >= 0) && (j < numColumns*ClueGame.SQUARE_LENGTH) ) {
 			return true;
@@ -84,28 +82,28 @@ public class Board extends JPanel {
 				layout[i][j].draw(g,this);
 			}
 		}
-		
+
 		if(humanplayer){
 			for (BoardCell b : targets) {
 				g.setColor(Color.CYAN);
 				g.fillRect(b.getColumn()*ClueGame.SQUARE_LENGTH, b.getRow()*ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH);
 			}
 		}
-		
+
 		for(Player p : players){
 			p.draw(g);
 		}
 		// add room names on the board gui
 		for (Entry<String, String> entry : roomNames.entrySet()) {
 			int row,col;
-		    String name = entry.getKey();
-		    String location = entry.getValue();
-		    String[] tempLine = location.split(",");
-		    col=Integer.parseInt(tempLine[0]);
-		    row=Integer.parseInt(tempLine[1]);
-		    g.drawString(name, row*ClueGame.SQUARE_LENGTH, col*ClueGame.SQUARE_LENGTH);
+			String name = entry.getKey();
+			String location = entry.getValue();
+			String[] tempLine = location.split(",");
+			col=Integer.parseInt(tempLine[0]);
+			row=Integer.parseInt(tempLine[1]);
+			g.drawString(name, row*ClueGame.SQUARE_LENGTH, col*ClueGame.SQUARE_LENGTH);
 		}
-		
+
 		addMouseListener(new TargetListener());
 	}
 
@@ -185,7 +183,7 @@ public class Board extends JPanel {
 		scan.close();
 		this.calcAdjacencies();
 	}
-	
+
 	public void loadLegend(String legendFile) throws FileNotFoundException, BadConfigFormatException {
 		//setup filereader and scanner
 		FileReader reader = new FileReader(legendFile);
@@ -210,39 +208,39 @@ public class Board extends JPanel {
 		for(int i = 0; i < numRows; i++) {
 			for(int j = 0; j < numColumns; j++) {
 				LinkedList<BoardCell> adjacents = new LinkedList<BoardCell>();
-				
+
 				if( getBoardCell(i, j).isWalkway() ) {
 					if ((i<numRows-1) && validAdjCell(i+1, j, DoorDirection.UP)) {
-							adjacents.add(getBoardCell(i+1,j));
+						adjacents.add(getBoardCell(i+1,j));
 					}
 					if ((j<numColumns-1) && validAdjCell(i, j+1, DoorDirection.LEFT))  {
-							adjacents.add(getBoardCell(i,j+1));
+						adjacents.add(getBoardCell(i,j+1));
 					}
 					if ((i>0) && validAdjCell(i-1, j, DoorDirection.DOWN)) {
-							adjacents.add(getBoardCell(i-1,j));
+						adjacents.add(getBoardCell(i-1,j));
 					}
 					if ((j>0) && validAdjCell(i, j-1, DoorDirection.RIGHT)) {
-							adjacents.add(getBoardCell(i,j-1));
+						adjacents.add(getBoardCell(i,j-1));
 					}
 				} else if( getBoardCell(i, j).isDoorway() ) {
 					if ((i<numRows-1) && (getRoomCell(i, j).getDoorDirection() == DoorDirection.DOWN)) {
-							adjacents.add(getBoardCell(i+1,j));
+						adjacents.add(getBoardCell(i+1,j));
 					}
 					if ((j<numColumns-1) && (getRoomCell(i, j).getDoorDirection() == DoorDirection.RIGHT)) {
-							adjacents.add(getBoardCell(i,j+1));
+						adjacents.add(getBoardCell(i,j+1));
 					}
 					if ((i>0) && (getRoomCell(i, j).getDoorDirection() == DoorDirection.UP)) {
-							adjacents.add(getBoardCell(i-1,j));
+						adjacents.add(getBoardCell(i-1,j));
 					}
 					if ((j>0) && (getRoomCell(i, j).getDoorDirection() == DoorDirection.LEFT)) { 
-							adjacents.add(getBoardCell(i,j-1));
+						adjacents.add(getBoardCell(i,j-1));
 					}
 				}
 				adjLists.put(getBoardCell(i,j), adjacents);
 			}
 		}
 	}
-	
+
 	private boolean validAdjCell(int i, int j, DoorDirection d) {
 		if(getBoardCell(i, j).isWalkway() || (getBoardCell(i, j).isDoorway() && getRoomCell(i,j).getDoorDirection() == d)) {
 			return true;
@@ -250,7 +248,7 @@ public class Board extends JPanel {
 			return false;
 		}
 	}
-	
+
 	public void calcTargets(BoardCell cell, int diceRoll) {
 		setupHelper(cell,diceRoll);
 	}
@@ -258,7 +256,7 @@ public class Board extends JPanel {
 	public void calcTargets(int i, int j, int diceRoll) {
 		setupHelper(getBoardCell(i, j), diceRoll);
 	}
-	
+
 	private void setupHelper(BoardCell cell, int diceRoll) {
 		startingPoint = cell;
 		visited.clear();
@@ -266,7 +264,7 @@ public class Board extends JPanel {
 		targets.clear();
 		findAllTargets(cell, diceRoll);
 	}
-	
+
 	public void findAllTargets(BoardCell cell, int diceRoll) {
 		LinkedList<BoardCell> temp = getAdjList(cell);
 		LinkedList<BoardCell> notYetVisited = new LinkedList<BoardCell>();
@@ -323,11 +321,11 @@ public class Board extends JPanel {
 	public RoomCell getRoomCell(int row, int col) {
 		return (RoomCell) layout[row][col];
 	}
-	
+
 	public void setPlayers(ArrayList<Player> player){
 		players = player;
 	}
-	
+
 	public void humanplay(boolean isHuman) {
 		humanplayer = isHuman;
 	}

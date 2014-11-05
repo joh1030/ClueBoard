@@ -2,20 +2,11 @@ package clueGame;
 
 import javax.swing.*;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Random;
-import java.util.Scanner;
-import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -122,6 +113,9 @@ public class ClueGame extends JFrame{
 		frame.add(panel, BorderLayout.EAST);
 	}
 	
+	public void updateRoll(int roll) {
+		this.roll.setText(Integer.toString(roll));
+	}
 
 	// creates control panel
 	public void createControlPanel(JFrame frame) {
@@ -212,8 +206,10 @@ public class ClueGame extends JFrame{
 		deal();
 		// create my cards panel then adds to jframe
 		createMyCardsPanel(this.players.get(currentPlayer).getMyCards(), this);
-
+		
 		createControlPanel(this);
+		
+		updateRoll(diceRoll);
 	}
 
 	public ClueGame(String layout, String legend) {
@@ -232,8 +228,8 @@ public class ClueGame extends JFrame{
 				((ComputerPlayer) p).setAllCards(cards);
 			}
 		}
-		board.calcTargets(players.get(currentPlayer).getRow(), players.get(currentPlayer).getCol(), new Random().nextInt(6)+1);
-		
+		diceRoll = new Random().nextInt(6)+1;
+		board.calcTargets(players.get(currentPlayer).getRow(), players.get(currentPlayer).getCol(), diceRoll);
 	}
 
 	private void loadRoomCards() {
@@ -360,7 +356,6 @@ public class ClueGame extends JFrame{
 	
 	public void makeMove(int diceRoll) {
 		board.calcTargets(players.get(currentPlayer).getRow(), players.get(currentPlayer).getCol(), diceRoll);
-		
 		if(players.get(currentPlayer) instanceof HumanPlayer){
 			board.humanplay(true);
 		} else {
@@ -376,6 +371,7 @@ public class ClueGame extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			diceRoll = (new Random()).nextInt(6) + 1;
 			if (!( (players.get(currentPlayer) instanceof HumanPlayer) && (players.get(currentPlayer)).getMustPlay()) ) {
+				updateRoll(diceRoll);
 				currentPlayer = (currentPlayer + 1) % players.size();
 				if(players.get(currentPlayer) instanceof HumanPlayer){
 					((HumanPlayer)players.get(currentPlayer)).setMustPlay(true);
@@ -391,5 +387,11 @@ public class ClueGame extends JFrame{
 	
 	public ArrayList<Card> getTempCards() {
 		return tempCards;
+	}
+	public void setName(JTextField name) {
+		this.name = name;
+	}
+	public void setRoll(JTextField roll) {
+		this.roll = roll;
 	}
 }
