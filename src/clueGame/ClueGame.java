@@ -113,10 +113,6 @@ public class ClueGame extends JFrame{
 		frame.add(panel, BorderLayout.EAST);
 	}
 	
-	public void updateRoll(int roll) {
-		this.roll.setText(Integer.toString(roll));
-	}
-
 	// creates control panel
 	public void createControlPanel(JFrame frame) {
 		JPanel panel = new JPanel();
@@ -208,6 +204,8 @@ public class ClueGame extends JFrame{
 		createMyCardsPanel(this.players.get(currentPlayer).getMyCards(), this);
 		
 		createControlPanel(this);
+		
+		updatePlayerName(this.players.get(currentPlayer).getName());
 		
 		updateRoll(diceRoll);
 	}
@@ -373,6 +371,7 @@ public class ClueGame extends JFrame{
 			if (!( (players.get(currentPlayer) instanceof HumanPlayer) && (players.get(currentPlayer)).getMustPlay()) ) {
 				updateRoll(diceRoll);
 				currentPlayer = (currentPlayer + 1) % players.size();
+				updatePlayerName(players.get(currentPlayer).getName());
 				if(players.get(currentPlayer) instanceof HumanPlayer){
 					((HumanPlayer)players.get(currentPlayer)).setMustPlay(true);
 				}
@@ -383,6 +382,14 @@ public class ClueGame extends JFrame{
 				JOptionPane.showMessageDialog(game, "You need to finish your turn", "Message", JOptionPane.INFORMATION_MESSAGE );
 			}
 		}
+	}
+	
+	public void updateRoll(int roll) {
+		this.roll.setText(Integer.toString(roll));
+	}
+	
+	public void updatePlayerName(String name) {
+		this.name.setText(name);
 	}
 	
 	public ArrayList<Card> getTempCards() {
