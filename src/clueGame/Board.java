@@ -34,6 +34,7 @@ public class Board extends JPanel {
 	private Map<String,String> roomNames= new HashMap<String,String>();
 	private boolean humanplayer;
 	private int currentPlayer;
+	private boolean badmove;
 
 	public Board(String layoutFile) throws FileNotFoundException, BadConfigFormatException {
 		loadBoardDimensions(layoutFile);
@@ -42,23 +43,30 @@ public class Board extends JPanel {
 
 	private class TargetListener implements MouseListener {
 		public void mouseClicked (MouseEvent event) {
-			boolean badmove = false;
-			for(BoardCell b : targets) {
-				if(b.isWithin(event.getY(), event.getX())){
-					players.get(currentPlayer).setLocation(b);
-					((HumanPlayer)players.get(currentPlayer)).setMustPlay(false);
-					humanplayer = false;
-					badmove = false;
-					break;
-				} else {
-					badmove = true;
+			badmove = false;
+			if(humanplayer){
+				if(withinArea(event.getX(),event.getY())){
+					for(BoardCell b : targets) {
+						if(b.isWithin(event.getY(), event.getX())){
+							players.get(currentPlayer).setLocation(b);
+							((HumanPlayer)players.get(currentPlayer)).setMustPlay(false);
+							humanplayer = false;
+							badmove = false;
+							break;
+						} else {
+							badmove = true;
+						}
+					}
+					if(badmove) {
+
+						JOptionPane.showMessageDialog(null, "You need to select a valid target. Try again.", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE );
+						event.translatePoint(-(event.getX() + 1), -(event.getY() + 1));
+					}
 				}
-			}
-			if(badmove) {
-				JOptionPane.showMessageDialog(null, "You need to select a valid target. Try again.", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE );
 			}
 			repaint();
 		}
+	
 
 		public void mousePressed (MouseEvent event) {}
 		public void mouseReleased (MouseEvent event) {}
@@ -67,7 +75,7 @@ public class Board extends JPanel {
 	}
 
 	private boolean withinArea(int i, int j) {
-		if( (i >= 0) && (i < numRows*ClueGame.SQUARE_LENGTH) && (j >= 0) && (j < numColumns*ClueGame.SQUARE_LENGTH) ) {
+		if( (i >= 0) && (i < numColumns*ClueGame.SQUARE_LENGTH) && (j >= 0) && (j < numRows*ClueGame.SQUARE_LENGTH) ) {
 			return true;
 		} else {
 			return false;
