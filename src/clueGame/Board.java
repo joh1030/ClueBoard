@@ -111,6 +111,7 @@ public class Board extends JPanel {
 			g.drawString(name, row*ClueGame.SQUARE_LENGTH, col*ClueGame.SQUARE_LENGTH);
 		}
 
+		addMouseListener(new TargetListener());
 		
 	}
 
