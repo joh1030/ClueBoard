@@ -70,14 +70,14 @@ public class ClueGame extends JFrame{
 		JMenuItem item = new JMenuItem("Show Notes");
 		class MenuItemListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
-				// if already creates, show notes
-				if (notes != null) 
-					notes.setVisible(true);
-				// else, create new notes
-				else {
+				// create new detective notes, if not created already
+				if (notes == null) {
 					notes = new DetectiveNotes(peopleCards,roomCards,weaponCards);
 					notes.setVisible(true);
 				}
+				// else, show notes
+				else 
+					notes.setVisible(true);
 			}
 		}
 		item.addActionListener(new MenuItemListener());
@@ -208,7 +208,7 @@ public class ClueGame extends JFrame{
 		setJMenuBar(menuBar);
 		menuBar.add(createFileMenu());
 		// makes splash screen
-		//JOptionPane.showMessageDialog(this, "You are " + this.players.get(currentPlayer).getName() +" press Next Player to begin play", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE );
+		JOptionPane.showMessageDialog(this, "You are " + this.players.get(currentPlayer).getName() +" press Next Player to begin play", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE );
 		tempCards = new ArrayList<Card>(cards);
 		selectAnswer();
 		deal();
@@ -299,9 +299,11 @@ public class ClueGame extends JFrame{
 	public Board getBoard() {
 		return board;
 	}
+
 	public ArrayList<Card> getCards(){
 		return cards;
 	}
+
 	public void selectAnswer(){
 		Card person,weapon,room;
 		Random rand = new Random();
@@ -343,6 +345,7 @@ public class ClueGame extends JFrame{
 			return false;
 		return true;
 	}
+
 	public void handleSuggestion(String person,String room, String weapon, Player accusingPlayer){
 		Card tempCard = null;
 		for(Player p: players){
@@ -412,5 +415,11 @@ public class ClueGame extends JFrame{
 	}
 	public void setRoll(JTextField roll) {
 		this.roll = roll;
+	}
+	public ArrayList<Card> getPeopleCards() {
+		return peopleCards;
+	}
+	public ArrayList<Card> getWeaponCards() {
+		return weaponCards;
 	}
 }

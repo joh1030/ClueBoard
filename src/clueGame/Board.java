@@ -2,6 +2,7 @@ package clueGame;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
@@ -15,6 +16,8 @@ import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
 
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -35,12 +38,14 @@ public class Board extends JPanel {
 	private boolean humanplayer;
 	private int currentPlayer;
 	private boolean badmove;
-
+	
+	private Guess guess;
+	
 	public Board(String layoutFile) throws FileNotFoundException, BadConfigFormatException {
 		loadBoardDimensions(layoutFile);
 		layout = new BoardCell[numRows][numColumns];
 	}
-
+	
 	private class TargetListener implements MouseListener {
 		public void mouseClicked (MouseEvent event) {
 			badmove = false;
@@ -49,16 +54,20 @@ public class Board extends JPanel {
 					for(BoardCell b : targets) {
 						if(b.isWithin(event.getY(), event.getX())){
 							players.get(currentPlayer).setLocation(b);
+							if (b.isRoom()) {
+								// make a guess dialog
+							}
 							((HumanPlayer)players.get(currentPlayer)).setMustPlay(false);
 							humanplayer = false;
 							badmove = false;
 							break;
-						} else {
+						} 
+						else {
 							badmove = true;
 						}
 					}
-					if(badmove) {
-						JOptionPane.showMessageDialog(null, "You need to select a valid target. Try again.", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE );
+					if (badmove) {
+						JOptionPane.showMessageDialog(null, "Select a valid target", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE );
 						event.translatePoint(-(event.getX() + 1), -(event.getY() + 1));
 					}
 				}

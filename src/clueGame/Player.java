@@ -55,7 +55,7 @@ public class Player {
 		return null;
 	}
 
-	public void draw(Graphics g){
+	public void draw(Graphics g) {
 		// fill players
 		g.setColor(roomColor);
 		g.fillOval(col*ClueGame.SQUARE_LENGTH, row*ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH);
