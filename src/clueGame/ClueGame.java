@@ -38,7 +38,7 @@ public class ClueGame extends JFrame{
 	private int currentPlayer;
 
 	DetectiveNotes notes;
-	
+
 	private JTextField name, roll, guess, response;
 
 	private int diceRoll;
@@ -70,15 +70,20 @@ public class ClueGame extends JFrame{
 		JMenuItem item = new JMenuItem("Show Notes");
 		class MenuItemListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
-				// creates detective notes when chosen
-				notes = new DetectiveNotes(peopleCards,roomCards,weaponCards);
-				notes.setVisible(true);
+				// if already creates, show notes
+				if (notes != null) 
+					notes.setVisible(true);
+				// else, create new notes
+				else {
+					notes = new DetectiveNotes(peopleCards,roomCards,weaponCards);
+					notes.setVisible(true);
+				}
 			}
 		}
 		item.addActionListener(new MenuItemListener());
 		return item;
 	}
-	
+
 	// creates my cards panel
 	public void createMyCardsPanel(ArrayList<Card> cards, JFrame frame) {
 		JPanel panel = new JPanel();
@@ -112,7 +117,7 @@ public class ClueGame extends JFrame{
 		panel.add(weaponsPanel);
 		frame.add(panel, BorderLayout.EAST);
 	}
-	
+
 	// creates control panel
 	public void createControlPanel(JFrame frame) {
 		JPanel panel = new JPanel();
@@ -162,12 +167,12 @@ public class ClueGame extends JFrame{
 
 	public static void main(String[] args) {
 		try {
-		ClueGame game = new ClueGame("ClueLayout.csv","ClueLegend.csv","players.txt","weapons.txt");
-		game.setVisible(true);
+			ClueGame game = new ClueGame("ClueLayout.csv","ClueLegend.csv","players.txt","weapons.txt");
+			game.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public ClueGame(String layout, String legend, String players, String weapons) throws FileNotFoundException, BadConfigFormatException {
@@ -192,7 +197,7 @@ public class ClueGame extends JFrame{
 		} catch (FileNotFoundException e ) {
 			throw new FileNotFoundException();
 		}
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize((board.getNumRows() + 10) * SQUARE_LENGTH, (board.getNumColumns() + 10) * SQUARE_LENGTH);
 		setTitle("Clue Game");
@@ -209,22 +214,22 @@ public class ClueGame extends JFrame{
 		deal();
 		// create my cards panel then adds to jframe
 		createMyCardsPanel(this.players.get(currentPlayer).getMyCards(), this);
-		
+
 		createControlPanel(this);
-		
+
 		updatePlayerName(this.players.get(currentPlayer).getName());
-		
+
 		updateRoll(diceRoll);
 	}
 
 	public ClueGame(String layout, String legend) throws FileNotFoundException, BadConfigFormatException {
-			this(layout,legend,"players.txt","weapons.txt");
+		this(layout,legend,"players.txt","weapons.txt");
 	}
 
 	public void loadConfigFiles() throws FileNotFoundException, BadConfigFormatException {
 		board.loadLegend(legendFile);
 		board.loadBoardConfig(layoutFile);
-		
+
 		loadPlayers(playersFile);
 		loadWeapons(weaponsFile);
 		loadRoomCards();
@@ -311,7 +316,7 @@ public class ClueGame extends JFrame{
 		n = rand.nextInt(roomCards.size());
 		room=roomCards.get(n);
 		cards.remove(room);
-		
+
 		solution = new Solution(person.getName(),weapon.getName(),room.getName());
 	}
 
@@ -358,7 +363,7 @@ public class ClueGame extends JFrame{
 	public void setSolution(Solution solutionIn){
 		solution = solutionIn;
 	}
-	
+
 	public void makeMove(int diceRoll) {
 		board.calcTargets(players.get(currentPlayer).getRow(), players.get(currentPlayer).getCol(), diceRoll);
 		if(players.get(currentPlayer) instanceof HumanPlayer){
@@ -370,7 +375,7 @@ public class ClueGame extends JFrame{
 		}
 		board.repaint();
 	}
-	
+
 	private class NextPlayerButtonListener implements ActionListener {
 		ClueGame game;
 		public void actionPerformed(ActionEvent e) {
@@ -390,15 +395,15 @@ public class ClueGame extends JFrame{
 			}
 		}
 	}
-	
+
 	public void updateRoll(int roll) {
 		this.roll.setText(Integer.toString(roll));
 	}
-	
+
 	public void updatePlayerName(String name) {
 		this.name.setText(name);
 	}
-	
+
 	public ArrayList<Card> getTempCards() {
 		return tempCards;
 	}
