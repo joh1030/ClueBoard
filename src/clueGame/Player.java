@@ -13,8 +13,7 @@ public class Player {
 	private Color roomColor;
 	private Color borderColor = Color.black;
 	private int row, col;
-
-
+	
 	public Player() {
 		name = "";
 		roomColor = Color.black;

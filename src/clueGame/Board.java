@@ -54,9 +54,6 @@ public class Board extends JPanel {
 					for(BoardCell b : targets) {
 						if(b.isWithin(event.getY(), event.getX())){
 							players.get(currentPlayer).setLocation(b);
-							if (b.isRoom()) {
-								// make a guess dialog
-							}
 							((HumanPlayer)players.get(currentPlayer)).setMustPlay(false);
 							humanplayer = false;
 							badmove = false;
@@ -67,7 +64,7 @@ public class Board extends JPanel {
 						}
 					}
 					if (badmove) {
-						JOptionPane.showMessageDialog(null, "Select a valid target", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE );
+						JOptionPane.showMessageDialog(null, "Select a valid target", "Clue", JOptionPane.INFORMATION_MESSAGE );
 						event.translatePoint(-(event.getX() + 1), -(event.getY() + 1));
 					}
 				}
@@ -75,7 +72,6 @@ public class Board extends JPanel {
 			repaint();
 		}
 	
-
 		public void mousePressed (MouseEvent event) {}
 		public void mouseReleased (MouseEvent event) {}
 		public void mouseEntered (MouseEvent event) {}

@@ -15,6 +15,13 @@ public abstract class BoardCell {
 		return column;
 	}
 	
+	public void setRow(int row) {
+		this.row = row;
+	}
+	
+	public void setCol(int col) {
+		column = col;
+	}
 	
 	@Override
 	public String toString() {

@@ -39,6 +39,12 @@ public class ClueGame extends JFrame{
 
 	DetectiveNotes notes;
 
+	Guess guessDialog;
+	
+	Suggestion suggestion;
+
+	BoardCell cell;
+
 	private JTextField name, roll, guess, response;
 
 	private int diceRoll;
@@ -371,16 +377,30 @@ public class ClueGame extends JFrame{
 		board.calcTargets(players.get(currentPlayer).getRow(), players.get(currentPlayer).getCol(), diceRoll);
 		if(players.get(currentPlayer) instanceof HumanPlayer){
 			board.humanplay(true);
-		} else {
+		} 
+		else {
 			Set<BoardCell> targets = board.getTargets();
-			BoardCell cell = ((ComputerPlayer) players.get(currentPlayer)).pickLocation(targets);
+			cell = ((ComputerPlayer) players.get(currentPlayer)).pickLocation(targets);
 			players.get(currentPlayer).setLocation(cell);
 		}
+		
 		board.repaint();
+		
+		if(players.get(currentPlayer) instanceof ComputerPlayer){
+			if (cell.isRoom()) {
+				// computer player make suggestion
+				suggestion = ((ComputerPlayer)players.get(currentPlayer)).createSuggestion(board.getRooms().get(((RoomCell)cell).getInitial()));
+			}
+		}
+		else {
+			cell = board.getRoomCell(players.get(currentPlayer).getRow(), players.get(currentPlayer).getCol());
+			if (cell.isRoom());
+				guessDialog = new Guess(board.getRooms().get(((RoomCell)cell).getInitial()),peopleCards, weaponCards);
+				guessDialog.setVisible(true);
+		}
 	}
 
 	private class NextPlayerButtonListener implements ActionListener {
-		ClueGame game;
 		public void actionPerformed(ActionEvent e) {
 			diceRoll = (new Random()).nextInt(6) + 1;
 			if (!( (players.get(currentPlayer) instanceof HumanPlayer) && (players.get(currentPlayer)).getMustPlay()) ) {
@@ -392,9 +412,9 @@ public class ClueGame extends JFrame{
 				}
 				board.setCurrentPlayer(currentPlayer);
 				makeMove(diceRoll);
-
-			} else {
-				JOptionPane.showMessageDialog(game, "You need to finish your turn", "Message", JOptionPane.INFORMATION_MESSAGE );
+			} 
+			else {
+				JOptionPane.showMessageDialog(null, "You need to finish your turn", "Message", JOptionPane.INFORMATION_MESSAGE );
 			}
 		}
 	}

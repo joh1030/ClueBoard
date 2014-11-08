@@ -18,10 +18,10 @@ public class Guess extends JDialog {
 	public ArrayList<Card> weaponsCards;
 	public String roomName;
 
-	public Guess(String roomName, ArrayList<Card> people, Card roomCard, ArrayList<Card> weapons) {
-		setSize(200, 300);
+	public Guess(String room, ArrayList<Card> people, ArrayList<Card> weapons) {
+		setSize(400, 300);
 		setTitle("Make a Guess");
-		this.roomName = roomName;
+		roomName = room;
 		peopleCards = people;
 		weaponsCards = weapons;
 		createLayout();
@@ -34,34 +34,34 @@ public class Guess extends JDialog {
 		JLabel yourRoom = new JLabel();
 		yourRoom.setText("Your room");
 		panel.add(yourRoom);
-		// person label
-		JLabel person = new JLabel();
-		person.setText("Person");
-		panel.add(person);
-		// weapon label
-		JLabel weapon = new JLabel();
-		weapon.setText("Weapon");
-		panel.add(weapon);
-		// Submit Button
-		JButton submitButton = new JButton("Submit");
-		//submitButton.addActionListener(new ButtonListener());
-		panel.add(submitButton);
 		// room name
 		JLabel room = new JLabel();
 		room.setText(roomName);
 		panel.add(room);
+		// person label
+		JLabel person = new JLabel();
+		person.setText("Person");
+		panel.add(person);
 		// person guess
 		JComboBox<String> personCombo = new JComboBox<String>();
 		for(Card c: peopleCards){
 			personCombo.addItem(c.getName());
 		}
 		panel.add(personCombo);
+		// weapon label
+		JLabel weapon = new JLabel();
+		weapon.setText("Weapon");
+		panel.add(weapon);
 		// weapon guess
 		JComboBox<String> weaponCombo = new JComboBox<String>();
-		for(Card c: peopleCards){
+		for(Card c: weaponsCards){
 			weaponCombo.addItem(c.getName());
 		}
 		panel.add(weaponCombo);
+		// Submit Button
+		JButton submitButton = new JButton("Submit");
+		//submitButton.addActionListener(new ButtonListener());
+		panel.add(submitButton);
 		// Cancel Button
 		JButton cancelButton = new JButton("Cancel");
 		//cancelButton.addActionListener(new ButtonListener());

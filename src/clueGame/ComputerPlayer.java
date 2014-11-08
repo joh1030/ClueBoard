@@ -44,8 +44,9 @@ public class ComputerPlayer extends Player {
 
 	public Suggestion createSuggestion(String room) {
 		
-		ArrayList<Card> people=new ArrayList<Card>();
-		ArrayList<Card> weapons=new ArrayList<Card>();
+		ArrayList<Card> people = new ArrayList<Card>();
+		ArrayList<Card> weapons = new ArrayList<Card>();
+		
 		String person;
 		String weapon;
 		
