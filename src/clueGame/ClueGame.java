@@ -41,8 +41,6 @@ public class ClueGame extends JFrame{
 
 	Guess guessDialog;
 	
-	Suggestion suggestion;
-
 	BoardCell cell;
 
 	private JTextField name, roll, guess, response;
@@ -386,18 +384,22 @@ public class ClueGame extends JFrame{
 		
 		board.repaint();
 		
+		Suggestion suggest;
+		
 		if(players.get(currentPlayer) instanceof ComputerPlayer){
 			if (cell.isRoom()) {
-				// computer player make suggestion
-				suggestion = ((ComputerPlayer)players.get(currentPlayer)).createSuggestion(board.getRooms().get(((RoomCell)cell).getInitial()));
+				String inRoom = board.getRooms().get(((RoomCell) cell).getInitial());
+				suggest = ((ComputerPlayer)players.get(currentPlayer)).createSuggestion(inRoom);
+				this.handleSuggestion(suggest.getPerson(),suggest.getRoom(),suggest.getWeapon(),players.get(currentPlayer));
+				updateGuess(suggest.toString());
 			}
 		}
-		else {
-			cell = board.getRoomCell(players.get(currentPlayer).getRow(), players.get(currentPlayer).getCol());
-			if (cell.isRoom());
-				guessDialog = new Guess(board.getRooms().get(((RoomCell)cell).getInitial()),peopleCards, weaponCards);
-				guessDialog.setVisible(true);
-		}
+//		else {
+//			cell = board.getRoomCell(players.get(currentPlayer).getRow(), players.get(currentPlayer).getCol());
+//			if (cell.isRoom());
+//				guessDialog = new Guess(board.getRooms().get(((RoomCell)cell).getInitial()),peopleCards, weaponCards);
+//				guessDialog.setVisible(true);
+//		}
 	}
 
 	private class NextPlayerButtonListener implements ActionListener {
@@ -423,6 +425,11 @@ public class ClueGame extends JFrame{
 		this.roll.setText(Integer.toString(roll));
 	}
 
+	public void updateGuess(String guesstext) {
+		this.guess.setText(guesstext);
+		this.guess.resize(guesstext.length()*10, this.guess.getHeight());;
+	}
+	
 	public void updatePlayerName(String name) {
 		this.name.setText(name);
 	}

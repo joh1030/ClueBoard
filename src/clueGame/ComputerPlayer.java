@@ -6,6 +6,7 @@ public class ComputerPlayer extends Player {
 	
 	private ArrayList<Card> seenCards= new ArrayList<Card>();
 	private ArrayList<Card> allCards= new ArrayList<Card>();
+	private ArrayList<Card> hand= new ArrayList<Card>();
 	private char lastRoomVisited;
 
 	public ComputerPlayer() {
@@ -19,7 +20,8 @@ public class ComputerPlayer extends Player {
 	@Override
 	public void addCard(Card card){
 		super.addCard(card);
-		seenCards.add(card);
+		hand.add(card);
+		updateSeen(card);
 	}
 
 	public BoardCell pickLocation(Set<BoardCell> targets) {
@@ -60,7 +62,6 @@ public class ComputerPlayer extends Player {
 				}
 			}
 		}
-		
 		person = people.get(new Random().nextInt(people.size())).getName();
 		weapon = weapons.get(new Random().nextInt(weapons.size())).getName();
 		
@@ -68,7 +69,7 @@ public class ComputerPlayer extends Player {
 	}
 	
 	public void setAllCards(ArrayList<Card> cardsIn){
-		allCards=cardsIn;
+		allCards.addAll(cardsIn);
 	}
 
 	public void updateSeen(Card seen) {

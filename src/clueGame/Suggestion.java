@@ -6,4 +6,6 @@ public class Suggestion extends Solution{
 		super(person, weapon, room);
 	}
 
+	
+	
 }
