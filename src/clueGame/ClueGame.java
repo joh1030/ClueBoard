@@ -38,8 +38,6 @@ public class ClueGame extends JFrame{
 	private int currentPlayer;
 
 	DetectiveNotes notes;
-
-	Guess guessDialog;
 	
 	BoardCell cell;
 
@@ -216,9 +214,10 @@ public class ClueGame extends JFrame{
 		tempCards = new ArrayList<Card>(cards);
 		selectAnswer();
 		deal();
+		board.setGame(this);
 		// create my cards panel then adds to jframe
 		createMyCardsPanel(this.players.get(currentPlayer).getMyCards(), this);
-
+		
 		createControlPanel(this);
 
 		updatePlayerName(this.players.get(currentPlayer).getName());
@@ -393,7 +392,7 @@ public class ClueGame extends JFrame{
 		board.repaint();
 		
 		Suggestion suggest;
-		
+		board.configGuessDialog(new Guess(peopleCards, weaponCards));
 		if(players.get(currentPlayer) instanceof ComputerPlayer){
 			if (cell.isRoom()) {
 				String inRoom = board.getRooms().get(((RoomCell) cell).getInitial());
@@ -402,12 +401,7 @@ public class ClueGame extends JFrame{
 				updateGuess(suggest.toString());
 			}
 		}
-//		else {
-//			cell = board.getRoomCell(players.get(currentPlayer).getRow(), players.get(currentPlayer).getCol());
-//			if (cell.isRoom());
-//				guessDialog = new Guess(board.getRooms().get(((RoomCell)cell).getInitial()),peopleCards, weaponCards);
-//				guessDialog.setVisible(true);
-//		}
+
 	}
 
 	private class NextPlayerButtonListener implements ActionListener {

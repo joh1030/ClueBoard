@@ -16,12 +16,10 @@ public class Guess extends JDialog {
 
 	public ArrayList<Card> peopleCards;
 	public ArrayList<Card> weaponsCards;
-	public String roomName;
 
-	public Guess(String room, ArrayList<Card> people, ArrayList<Card> weapons) {
+	public Guess(ArrayList<Card> people, ArrayList<Card> weapons) {
 		setSize(400, 300);
 		setTitle("Make a Guess");
-		roomName = room;
 		peopleCards = people;
 		weaponsCards = weapons;
 		createLayout();
@@ -30,14 +28,6 @@ public class Guess extends JDialog {
 	public void createLayout(){
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(4,0));
-		// your room label
-		JLabel yourRoom = new JLabel();
-		yourRoom.setText("Your room");
-		panel.add(yourRoom);
-		// room name
-		JLabel room = new JLabel();
-		room.setText(roomName);
-		panel.add(room);
 		// person label
 		JLabel person = new JLabel();
 		person.setText("Person");

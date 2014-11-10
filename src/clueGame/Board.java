@@ -39,7 +39,6 @@ public class Board extends JPanel {
 	private int currentPlayer;
 	private boolean badmove;
 	private ClueGame game;
-	Guess guessDialog;
 	
 	private Guess guess;
 	
@@ -48,8 +47,8 @@ public class Board extends JPanel {
 		layout = new BoardCell[numRows][numColumns];
 	}
 	
-	public void configGuessDialog(){
-		
+	public void configGuessDialog(Guess g){
+		guess = g;
 	}
 	
 	private class TargetListener implements MouseListener {
@@ -75,12 +74,9 @@ public class Board extends JPanel {
 					} else {
 						if( getBoardCell(players.get(currentPlayer).getRow(),players.get(currentPlayer).getCol()).isRoom() ) {
 
-							guessDialog = new Guess(getRooms().get(((RoomCell)cell).getInitial()),peopleCards, weaponCards);
-							guessDialog.setVisible(true);
-							
+							guess.setVisible(true);
 							String roomGuess = rooms.get(((RoomCell) getBoardCell(players.get(currentPlayer).getRow(),players.get(currentPlayer).getCol())).getInitial());
 							//game.handleSuggestion(person, room, weapon, players.get(currentPlayer));
-							System.out.println(roomGuess);
 						}
 					}
 				}
