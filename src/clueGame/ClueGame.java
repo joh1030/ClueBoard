@@ -354,13 +354,16 @@ public class ClueGame extends JFrame{
 		Card tempCard = null;
 		for(Player p: players){
 			if(p!=accusingPlayer){
-				if(p.disproveSuggestion(person, weapon, room)!=null)
+				System.out.println(p.getName()+ "  " + person);
+				if(p.getName().equals(person)) {
+					p.setLocation(board.getBoardCell(accusingPlayer.getRow(),accusingPlayer.getCol()));
+				}
+				if(tempCard == null){
 					tempCard=p.disproveSuggestion(person, weapon, room);
-				if(tempCard != null){
-					break;
 				}
 			}
 		}
+		
 		if(tempCard!=null){
 			for(Player p: players){
 				if(p instanceof ComputerPlayer){
@@ -369,7 +372,7 @@ public class ClueGame extends JFrame{
 			}
 			updateResponse(tempCard.getName());
 		} else {
-			updateResponse("Not Disproved");
+			updateResponse("No new Clues");
 		}
 	}
 
