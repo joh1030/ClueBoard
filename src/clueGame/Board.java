@@ -38,7 +38,6 @@ public class Board extends JPanel {
 	private boolean humanplayer;
 	private int currentPlayer;
 	private boolean badmove;
-	private ClueGame game;
 	
 	private Guess guess;
 	
@@ -73,10 +72,9 @@ public class Board extends JPanel {
 						event.translatePoint(-(event.getX() + 1), -(event.getY() + 1));
 					} else {
 						if( getBoardCell(players.get(currentPlayer).getRow(),players.get(currentPlayer).getCol()).isRoom() ) {
-
-							guess.setVisible(true);
 							String roomGuess = rooms.get(((RoomCell) getBoardCell(players.get(currentPlayer).getRow(),players.get(currentPlayer).getCol())).getInitial());
-							//game.handleSuggestion(person, room, weapon, players.get(currentPlayer));
+							guess.changeRoom(roomGuess);
+							guess.setVisible(true);	
 						}
 					}
 				}
@@ -90,10 +88,6 @@ public class Board extends JPanel {
 		public void mouseExited (MouseEvent event) {}
 	}
 	
-	public void setGame(ClueGame game) {
-		this.game = game;
-	}
-
 	private boolean withinArea(int i, int j) {
 		if( (i >= 0) && (i < numColumns*ClueGame.SQUARE_LENGTH) && (j >= 0) && (j < numRows*ClueGame.SQUARE_LENGTH) ) {
 			return true;

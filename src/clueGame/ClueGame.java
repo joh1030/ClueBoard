@@ -214,7 +214,7 @@ public class ClueGame extends JFrame{
 		tempCards = new ArrayList<Card>(cards);
 		selectAnswer();
 		deal();
-		board.setGame(this);
+		board.configGuessDialog(new Guess(peopleCards, weaponCards, " ", this, this.players.get(currentPlayer)));
 		// create my cards panel then adds to jframe
 		createMyCardsPanel(this.players.get(currentPlayer).getMyCards(), this);
 		
@@ -392,7 +392,7 @@ public class ClueGame extends JFrame{
 		board.repaint();
 		
 		Suggestion suggest;
-		board.configGuessDialog(new Guess(peopleCards, weaponCards));
+		board.configGuessDialog(new Guess(peopleCards, weaponCards, " ", this, players.get(currentPlayer)));
 		if(players.get(currentPlayer) instanceof ComputerPlayer){
 			if (cell.isRoom()) {
 				String inRoom = board.getRooms().get(((RoomCell) cell).getInitial());
