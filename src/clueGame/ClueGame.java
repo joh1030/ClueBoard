@@ -354,7 +354,6 @@ public class ClueGame extends JFrame{
 		Card tempCard = null;
 		for(Player p: players){
 			if(p!=accusingPlayer){
-				System.out.println(p.getName()+ "  " + person);
 				if(p.getName().equals(person)) {
 					p.setLocation(board.getBoardCell(accusingPlayer.getRow(),accusingPlayer.getCol()));
 				}

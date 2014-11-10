@@ -38,12 +38,18 @@ public class Board extends JPanel {
 	private boolean humanplayer;
 	private int currentPlayer;
 	private boolean badmove;
+	private ClueGame game;
+	Guess guessDialog;
 	
 	private Guess guess;
 	
 	public Board(String layoutFile) throws FileNotFoundException, BadConfigFormatException {
 		loadBoardDimensions(layoutFile);
 		layout = new BoardCell[numRows][numColumns];
+	}
+	
+	public void configGuessDialog(){
+		
 	}
 	
 	private class TargetListener implements MouseListener {
@@ -66,6 +72,16 @@ public class Board extends JPanel {
 					if (badmove) {
 						JOptionPane.showMessageDialog(null, "Select a valid target", "Clue", JOptionPane.INFORMATION_MESSAGE );
 						event.translatePoint(-(event.getX() + 1), -(event.getY() + 1));
+					} else {
+						if( getBoardCell(players.get(currentPlayer).getRow(),players.get(currentPlayer).getCol()).isRoom() ) {
+
+							guessDialog = new Guess(getRooms().get(((RoomCell)cell).getInitial()),peopleCards, weaponCards);
+							guessDialog.setVisible(true);
+							
+							String roomGuess = rooms.get(((RoomCell) getBoardCell(players.get(currentPlayer).getRow(),players.get(currentPlayer).getCol())).getInitial());
+							//game.handleSuggestion(person, room, weapon, players.get(currentPlayer));
+							System.out.println(roomGuess);
+						}
 					}
 				}
 			}
@@ -76,6 +92,10 @@ public class Board extends JPanel {
 		public void mouseReleased (MouseEvent event) {}
 		public void mouseEntered (MouseEvent event) {}
 		public void mouseExited (MouseEvent event) {}
+	}
+	
+	public void setGame(ClueGame game) {
+		this.game = game;
 	}
 
 	private boolean withinArea(int i, int j) {
