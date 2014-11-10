@@ -356,6 +356,9 @@ public class ClueGame extends JFrame{
 			if(p!=accusingPlayer){
 				if(p.disproveSuggestion(person, weapon, room)!=null)
 					tempCard=p.disproveSuggestion(person, weapon, room);
+				if(tempCard != null){
+					break;
+				}
 			}
 		}
 		if(tempCard!=null){
@@ -364,6 +367,9 @@ public class ClueGame extends JFrame{
 					((ComputerPlayer) p).updateSeen(tempCard);
 				}
 			}
+			updateResponse(tempCard.getName());
+		} else {
+			updateResponse("Not Disproved");
 		}
 	}
 
@@ -404,6 +410,8 @@ public class ClueGame extends JFrame{
 
 	private class NextPlayerButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			updateResponse(" ");
+			updateGuess(" ");
 			diceRoll = (new Random()).nextInt(6) + 1;
 			if (!( (players.get(currentPlayer) instanceof HumanPlayer) && (players.get(currentPlayer)).getMustPlay()) ) {
 				updateRoll(diceRoll);
@@ -427,7 +435,11 @@ public class ClueGame extends JFrame{
 
 	public void updateGuess(String guesstext) {
 		this.guess.setText(guesstext);
-		this.guess.resize(guesstext.length()*10, this.guess.getHeight());;
+		//this.guess.resize(Math.max(new JTextField().WIDTH , guesstext.length()*10), this.guess.getHeight());
+	}
+	
+	public void updateResponse(String cardDis) {
+		this.response.setText(cardDis);
 	}
 	
 	public void updatePlayerName(String name) {
