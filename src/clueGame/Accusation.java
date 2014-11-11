@@ -23,8 +23,9 @@ public class Accusation extends JDialog {
 	public ArrayList<Card> peopleCards, weaponCards, roomCards;
 	private ClueGame game;
 	private Player player;
-
-	public Accusation(ArrayList<Card> people, ArrayList<Card> weapons, ArrayList<Card> rooms, Player player, ClueGame game) {
+	private Board board;
+	
+	public Accusation(ArrayList<Card> people, ArrayList<Card> weapons, ArrayList<Card> rooms, Player player, ClueGame game, Board board) {
 		setSize(400, 300);
 		setTitle("Make an Accusation");
 		peopleCards = people;
@@ -32,6 +33,7 @@ public class Accusation extends JDialog {
 		roomCards = rooms;
 		this.player = player;
 		this.game = game;
+		this.board = board;
 		createLayout();
 	}
 
@@ -97,12 +99,13 @@ public class Accusation extends JDialog {
 			dispose();
 			if (!correct) {
 				JOptionPane.showMessageDialog(null, "Your Accusation is incorrect", "INCORRECT", JOptionPane.INFORMATION_MESSAGE );
+				board.humanplay(false);
+				game.setCurrentPlayer((game.getCurrentPlayer() + 1) % game.getPlayers().size());
+				board.repaint();
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Your accusation is correct", "YOU WIN!!!", JOptionPane.INFORMATION_MESSAGE );
 			}
-			game.setCurrentPlayer((game.getCurrentPlayer() + 1) % game.getPlayers().size());
 		}
-
 	}
 }

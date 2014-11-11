@@ -46,6 +46,8 @@ public class ClueGame extends JFrame{
 
 	private int diceRoll;
 
+	Card tempCard;
+
 	// used for the length of each squares on the board
 	public static final int SQUARE_LENGTH = 20; 
 
@@ -180,10 +182,8 @@ public class ClueGame extends JFrame{
 
 		public void actionPerformed(ActionEvent e) {
 			if (board.getHumanPlayer()) {
-				accuse = new Accusation(peopleCards, weaponCards, roomCards, players.get(currentPlayer), game);
+				accuse = new Accusation(peopleCards, weaponCards, roomCards, players.get(currentPlayer), game, board);
 				accuse.setVisible(true);
-				board.humanplay(false);
-				board.repaint();
 			}
 			else 
 				JOptionPane.showMessageDialog(null, "It is not your turn", "Clue", JOptionPane.INFORMATION_MESSAGE );
@@ -394,7 +394,7 @@ public class ClueGame extends JFrame{
 	}
 
 	public void handleSuggestion(String person,String room, String weapon, Player accusingPlayer){
-		Card tempCard = null;
+		tempCard = null;
 		for(Player p: players){
 			if(p!=accusingPlayer){
 				if(p.getName().equals(person)) {
@@ -445,9 +445,8 @@ public class ClueGame extends JFrame{
 				suggest = ((ComputerPlayer)players.get(currentPlayer)).createSuggestion(inRoom);
 				this.handleSuggestion(suggest.getPerson(),suggest.getRoom(),suggest.getWeapon(),players.get(currentPlayer));
 				updateGuess(suggest.toString());
-			}
+			}	
 		}
-
 	}
 
 	public void updateRoll(int roll) {
