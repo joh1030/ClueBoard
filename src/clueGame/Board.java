@@ -352,6 +352,10 @@ public class Board extends JPanel {
 	public void humanplay(boolean isHuman) {
 		humanplayer = isHuman;
 	}
+	
+	public boolean getHumanPlayer() {
+		return humanplayer;
+	}
 
 	public int getCurrentPlayer() {
 		return currentPlayer;

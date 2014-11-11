@@ -179,9 +179,11 @@ public class ClueGame extends JFrame{
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			if (currentPlayer == 0) {
+			if (board.getHumanPlayer()) {
 				accuse = new Accusation(peopleCards, weaponCards, roomCards, players.get(currentPlayer), game);
 				accuse.setVisible(true);
+				board.humanplay(false);
+				board.repaint();
 			}
 			else 
 				JOptionPane.showMessageDialog(null, "It is not your turn", "Clue", JOptionPane.INFORMATION_MESSAGE );
