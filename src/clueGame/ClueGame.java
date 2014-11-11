@@ -416,6 +416,12 @@ public class ClueGame extends JFrame{
 		} 
 		else {
 			updateResponse("No new Clues");
+			for (Player p : players){
+				if(p instanceof ComputerPlayer){
+					((ComputerPlayer) p).setAccuser(true);
+					((ComputerPlayer) p).createAccusation(person,weapon,room);
+				}
+			}
 		}
 	}
 
@@ -424,19 +430,29 @@ public class ClueGame extends JFrame{
 	}
 
 	public void makeMove(int diceRoll) {
+		Suggestion suggest;
 		board.calcTargets(players.get(currentPlayer).getRow(), players.get(currentPlayer).getCol(), diceRoll);
 		if(players.get(currentPlayer) instanceof HumanPlayer){
 			board.humanplay(true);
 		} 
 		else {
+			if(((ComputerPlayer) players.get(currentPlayer)).readyToAccuse()){
+				Solution accuse = ((ComputerPlayer)players.get(currentPlayer)).createAccusation();
+				if(checkAccusation(accuse)){
+					JOptionPane.showMessageDialog(null, players.get(currentPlayer).getName() + "'s accusation is correct \n It was " + accuse.toString(),"COMPUTER ACCUSATION ", JOptionPane.INFORMATION_MESSAGE );
+				} else {
+					JOptionPane.showMessageDialog(null, players.get(currentPlayer).getName() + "'s accusation is incorrect. \nIt was " + accuse.toString(),"COMPUTER ACCUSATION ", JOptionPane.INFORMATION_MESSAGE );
+				}
+			} else {
 			Set<BoardCell> targets = board.getTargets();
 			cell = ((ComputerPlayer) players.get(currentPlayer)).pickLocation(targets);
 			players.get(currentPlayer).setLocation(cell);
+			}
 		}
 
 		board.repaint();
 
-		Suggestion suggest;
+		
 
 		board.configGuessDialog(new Guess(peopleCards, weaponCards, " ", this, players.get(currentPlayer)));
 		if(players.get(currentPlayer) instanceof ComputerPlayer){

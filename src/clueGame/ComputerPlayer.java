@@ -8,13 +8,17 @@ public class ComputerPlayer extends Player {
 	private ArrayList<Card> allCards= new ArrayList<Card>();
 	private ArrayList<Card> hand= new ArrayList<Card>();
 	private char lastRoomVisited;
+	boolean accuser;
+	Solution mySoln;
 
 	public ComputerPlayer() {
 		super();
+		accuser = false;
 	}
 
 	public ComputerPlayer(String name, String color, int row, int col) {
 		super(name,color,row,col);
+		accuser = false;
 	}
 	
 	@Override
@@ -80,5 +84,52 @@ public class ComputerPlayer extends Player {
 	}
 	public char getLastVisited(){
 		return lastRoomVisited;
+	}
+	
+	public boolean readyToAccuse() {
+		int unknownCount = 0;
+		for(Card c: allCards){
+			if(!seenCards.contains(c)){
+				unknownCount++;
+			}
+		}
+			
+		if (unknownCount == 3 || accuser == true) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public Solution createAccusation() {
+		String people = " ";
+		String weapon = " ";
+		String room = " ";
+		for(Card c: allCards){
+			if(!seenCards.contains(c)){
+				if(c.cardType == Card.CardType.PERSON){
+					people = c.getName();
+				}
+				if(c.cardType == Card.CardType.WEAPON){
+					weapon = c.getName();
+				}
+				if(c.cardType == Card.CardType.ROOM){
+					room= c.getName();
+				}
+			}
+		}
+		if(accuser == true) {
+			return mySoln;
+		} else {
+			return new Solution(people,weapon,room);
+		}
+	}
+	
+	public void createAccusation(String per,String weap,String rm) {
+		mySoln = new Solution(per,weap,rm);
+	}
+	
+	public void setAccuser (boolean a) {
+		accuser = a;
 	}
 }
