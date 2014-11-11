@@ -17,39 +17,42 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class Guess extends JDialog {
+public class Accusation extends JDialog {
 
-	public ArrayList<Card> peopleCards;
-	public ArrayList<Card> weaponsCards;
+	public JComboBox<String> personCombo, weaponCombo, roomCombo;
+	public ArrayList<Card> peopleCards, weaponCards, roomCards;
 	private ClueGame game;
-	private String room;
 	private Player player;
-	JComboBox<String> weaponCombo;
-	JComboBox<String> personCombo;
 
-	public Guess(ArrayList<Card> people, ArrayList<Card> weapons, String room, ClueGame game, Player player) {
+	public Accusation(ArrayList<Card> people, ArrayList<Card> weapons, ArrayList<Card> rooms, Player player, ClueGame game) {
 		setSize(400, 300);
-		setTitle("Make a Guess");
-		this.room = room;
-		this.game = game;
+		setTitle("Make an Accusation");
 		peopleCards = people;
-		weaponsCards = weapons;
+		weaponCards = weapons;
+		roomCards = rooms;
 		this.player = player;
+		this.game = game;
 		createLayout();
-	}
-	
-	public void changeRoom(String room) {
-		this.room = room;
 	}
 
 	public void createLayout(){
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(3,0));
+		panel.setLayout(new GridLayout(4,0));
+		// room label
+		JLabel room = new JLabel();
+		room.setText("Room");
+		panel.add(room);
+		// room for accusation
+		roomCombo = new JComboBox<String>();
+		for(Card c: roomCards){
+			roomCombo.addItem(c.getName());
+		}
+		panel.add(roomCombo);
 		// person label
 		JLabel person = new JLabel();
 		person.setText("Person");
 		panel.add(person);
-		// person guess
+		// person for accusation
 		personCombo = new JComboBox<String>();
 		for(Card c: peopleCards){
 			personCombo.addItem(c.getName());
@@ -59,9 +62,9 @@ public class Guess extends JDialog {
 		JLabel weapon = new JLabel();
 		weapon.setText("Weapon");
 		panel.add(weapon);
-		// weapon guess
+		// weapon for accusation
 		weaponCombo = new JComboBox<String>();
-		for(Card c: weaponsCards){
+		for(Card c: weaponCards){
 			weaponCombo.addItem(c.getName());
 		}
 		panel.add(weaponCombo);
@@ -75,21 +78,31 @@ public class Guess extends JDialog {
 		panel.add(cancelButton);
 		this.add(panel);
 	}
-	
+
 	private class CancelButtonListener implements ActionListener {
-		
+
 		public void actionPerformed(ActionEvent e) {
 			dispose();
 		}
 	}
-	
-	private class SubmitButtonListener implements ActionListener {
 
-		public void actionPerformed(ActionEvent e) {
-			game.handleSuggestion(personCombo.getSelectedItem().toString(), room, weaponCombo.getSelectedItem().toString(), player);
-			game.updateGuess(personCombo.getSelectedItem().toString() + ", with the " + weaponCombo.getSelectedItem().toString() + ", in the " + room);
-			dispose();
-		}
+	private class SubmitButtonListener implements ActionListener {
 		
+		Solution solution;
+		private boolean correct = false;
+		
+		public void actionPerformed(ActionEvent e) {
+			solution = new Solution (personCombo.getSelectedItem().toString(), weaponCombo.getSelectedItem().toString(), roomCombo.getSelectedItem().toString());
+			correct = game.checkAccusation(solution);
+			dispose();
+			if (!correct) {
+				JOptionPane.showMessageDialog(null, "Your Accusation is incorrect", "INCORRECT", JOptionPane.INFORMATION_MESSAGE );
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Your accusation is correct", "YOU WIN!!!", JOptionPane.INFORMATION_MESSAGE );
+			}
+			game.setCurrentPlayer((game.getCurrentPlayer() + 1) % game.getPlayers().size());
+		}
+
 	}
 }

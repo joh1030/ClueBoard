@@ -6,7 +6,7 @@ public class Solution {
 	
 	@Override
 	public String toString() {
-		return (person + ", with the " + weapon + ", in the " + room);
+		return (person + " with the " + weapon + " in the " + room);
 	}
 
 	public Solution(String person,String weapon,String room){

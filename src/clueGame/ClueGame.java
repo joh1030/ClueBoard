@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
@@ -38,7 +39,7 @@ public class ClueGame extends JFrame{
 	private int currentPlayer;
 
 	DetectiveNotes notes;
-	
+
 	BoardCell cell;
 
 	private JTextField name, roll, guess, response;
@@ -138,6 +139,7 @@ public class ClueGame extends JFrame{
 		panel.add(nextPlayerButton);
 		// Accusation Button
 		JButton accusationButton = new JButton("MAKE ACCUSATION");
+		accusationButton.addActionListener(new AccusationButtonListener(this));
 		panel.add(accusationButton);
 		// Roll Panel
 		JPanel rollPanel = new JPanel();
@@ -165,6 +167,46 @@ public class ClueGame extends JFrame{
 		panel.add(responsePanel);
 		// Add panel to JFrame
 		frame.add(panel, BorderLayout.SOUTH);
+	}
+
+	private class AccusationButtonListener implements ActionListener {
+
+		private Accusation accuse;
+		private ClueGame game;
+
+		public AccusationButtonListener(ClueGame game) {
+			this.game = game;
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			if (currentPlayer == 0) {
+				accuse = new Accusation(peopleCards, weaponCards, roomCards, players.get(currentPlayer), game);
+				accuse.setVisible(true);
+			}
+			else 
+				JOptionPane.showMessageDialog(null, "It is not your turn", "Clue", JOptionPane.INFORMATION_MESSAGE );
+		}
+	}
+
+	private class NextPlayerButtonListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			updateResponse(" ");
+			updateGuess(" ");
+			diceRoll = (new Random()).nextInt(6) + 1;
+			if (!( (players.get(currentPlayer) instanceof HumanPlayer) && (players.get(currentPlayer)).getMustPlay()) ) {
+				updateRoll(diceRoll);
+				currentPlayer = (currentPlayer + 1) % players.size();
+				updatePlayerName(players.get(currentPlayer).getName());
+				if(players.get(currentPlayer) instanceof HumanPlayer){
+					((HumanPlayer)players.get(currentPlayer)).setMustPlay(true);
+				}
+				board.setCurrentPlayer(currentPlayer);
+				makeMove(diceRoll);
+			} 
+			else {
+				JOptionPane.showMessageDialog(null, "You need to finish your turn", "Message", JOptionPane.INFORMATION_MESSAGE );
+			}
+		}
 	}
 
 	public static void main(String[] args) {
@@ -217,7 +259,7 @@ public class ClueGame extends JFrame{
 		board.configGuessDialog(new Guess(peopleCards, weaponCards, " ", this, this.players.get(currentPlayer)));
 		// create my cards panel then adds to jframe
 		createMyCardsPanel(this.players.get(currentPlayer).getMyCards(), this);
-		
+
 		createControlPanel(this);
 
 		updatePlayerName(this.players.get(currentPlayer).getName());
@@ -361,7 +403,7 @@ public class ClueGame extends JFrame{
 				}
 			}
 		}
-		
+
 		if(tempCard!=null){
 			for(Player p: players){
 				if(p instanceof ComputerPlayer){
@@ -369,7 +411,8 @@ public class ClueGame extends JFrame{
 				}
 			}
 			updateResponse(tempCard.getName());
-		} else {
+		} 
+		else {
 			updateResponse("No new Clues");
 		}
 	}
@@ -388,10 +431,11 @@ public class ClueGame extends JFrame{
 			cell = ((ComputerPlayer) players.get(currentPlayer)).pickLocation(targets);
 			players.get(currentPlayer).setLocation(cell);
 		}
-		
+
 		board.repaint();
-		
+
 		Suggestion suggest;
+
 		board.configGuessDialog(new Guess(peopleCards, weaponCards, " ", this, players.get(currentPlayer)));
 		if(players.get(currentPlayer) instanceof ComputerPlayer){
 			if (cell.isRoom()) {
@@ -404,40 +448,18 @@ public class ClueGame extends JFrame{
 
 	}
 
-	private class NextPlayerButtonListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			updateResponse(" ");
-			updateGuess(" ");
-			diceRoll = (new Random()).nextInt(6) + 1;
-			if (!( (players.get(currentPlayer) instanceof HumanPlayer) && (players.get(currentPlayer)).getMustPlay()) ) {
-				updateRoll(diceRoll);
-				currentPlayer = (currentPlayer + 1) % players.size();
-				updatePlayerName(players.get(currentPlayer).getName());
-				if(players.get(currentPlayer) instanceof HumanPlayer){
-					((HumanPlayer)players.get(currentPlayer)).setMustPlay(true);
-				}
-				board.setCurrentPlayer(currentPlayer);
-				makeMove(diceRoll);
-			} 
-			else {
-				JOptionPane.showMessageDialog(null, "You need to finish your turn", "Message", JOptionPane.INFORMATION_MESSAGE );
-			}
-		}
-	}
-
 	public void updateRoll(int roll) {
 		this.roll.setText(Integer.toString(roll));
 	}
 
 	public void updateGuess(String guesstext) {
 		this.guess.setText(guesstext);
-		//this.guess.resize(Math.max(new JTextField().WIDTH , guesstext.length()*10), this.guess.getHeight());
 	}
-	
+
 	public void updateResponse(String cardDis) {
 		this.response.setText(cardDis);
 	}
-	
+
 	public void updatePlayerName(String name) {
 		this.name.setText(name);
 	}
@@ -456,5 +478,11 @@ public class ClueGame extends JFrame{
 	}
 	public ArrayList<Card> getWeaponCards() {
 		return weaponCards;
+	}
+	public int getCurrentPlayer() {
+		return currentPlayer;
+	}
+	public void setCurrentPlayer(int currentPlayer) {
+		this.currentPlayer = currentPlayer;
 	}
 }
