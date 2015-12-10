@@ -1,1 +1,1 @@
-# GUI for Clue Game
+Clue board without GUI
